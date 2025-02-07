@@ -1,0 +1,40 @@
+nav {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: black;
+  color: #fff;
+  z-index: 10;
+  box-sizing: border-box; /* Ensures padding doesn't affect width */
+}
+
+nav img {
+  width: 80px;
+  object-fit: cover;
+}
+
+nav ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  list-style: none;
+}
+
+nav ul a {
+  color: white;
+  text-decoration: none;
+}
+
+nav ul li {
+  color: white;
+  margin-right: 1rem;
+}
+
+hr {
+  margin-bottom: 52px;
+}

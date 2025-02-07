@@ -1,0 +1,70 @@
+.chef {
+  width: 8rem;
+  height: 16rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(250, 136, 54, 0.4);
+}
+
+.chef img {
+  width: 8rem;
+  object-fit: cover;
+  margin: 0 auto;
+}
+
+.chef h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 0.5rem; /* Space between image and title */
+}
+
+.chef p {
+  font-size: 1rem;
+  font-weight: normal;
+  margin-top: 0.5rem; /* Space between title and text */
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .chef {
+    width: 6rem; /* Smaller width for smaller screens */
+
+    padding: 0.8rem; /* Slightly less padding */
+  }
+
+  .chef img {
+    width: 6rem; /* Adjust the image size */
+  }
+
+  .chef h3 {
+    font-size: 1rem; /* Adjust font size */
+  }
+
+  .chef p {
+    font-size: 0.9rem; /* Adjust font size */
+  }
+}
+
+/* Responsive design for very small screens (mobile) */
+@media (max-width: 480px) {
+  .chef {
+    width: 5rem; /* Even smaller width for small screens */
+    height: 10rem;
+    padding: 0.5rem; /* Smaller padding */
+  }
+
+  .chef img {
+    width: 5rem; /* Adjust the image size */
+  }
+
+  .chef h3 {
+    font-size: 0.8rem; /* Adjust font size */
+  }
+
+  .chef p {
+    font-size: 0.75rem; /* Adjust font size */
+  }
+}

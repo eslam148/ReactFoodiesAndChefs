@@ -1,0 +1,16 @@
+button {
+  background-color: var(--custom-orange);
+  font-weight: bold;
+  color: var(--custom-black);
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 140px;
+  transition: background-color 100ms ease-in-out;
+}
+
+button:hover {
+  background-color: var(--custom-orange-dark);
+}
