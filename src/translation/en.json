@@ -1,0 +1,218 @@
+{
+  "global": {
+    "showcaseYourTalent": "Showcase your talent",
+    "edit": "Edit",
+    "show": "Show"
+  },
+  "navigation": {
+    "home": "Home",
+    "createEvent": "Create Event",
+    "events": "Events",
+    "invites": "Invites",
+    "menus": "Menus",
+    "offers": "Offers",
+    "signin": "Sign In",
+    "signout": "Sign Out",
+    "profile": "Profile",
+    "copyrights": "© 2025 Foodies and Chefs. All rights reserved."
+  },
+  "signin": {
+    "signin": "Sign In",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot Password?",
+    "dontHaveAccount": "Don't have an account?",
+    "createAccount": "Create Account",
+    "signinWithGoogle": "Sign in with Google",
+    "invalidCredentials": "Invalid Username Or Password."
+  },
+  "signup": {
+    "signup": "Sign Up",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "phoneNumber": "Phone Number",
+    "invalidPhoneNum": "Invalid country code. Please select from the list.",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "alreadyHaveAccount": "Already have an account?",
+    "signin": "Sign In",
+    "signupWithGoogle": "Sign up with Google"
+  },
+  "verifyOtp": {
+    "checkYourEmail": "Check your Email",
+    "description": "Please enter the six digit verification code we sent to",
+    "invalideInp": "Invalid code, please try again.",
+    "confirm": "Confirm",
+    "didntReceiveCode": "Didn't receive the code?",
+    "resend": "Resend",
+    "in": "in"
+  },
+  "forgotPassword": {
+    "confirmationPage": {
+      "checkYourEmail": "Check your email",
+      "description": "We'll send your reset instructions to your email.",
+      "didntReceiveEmail": "Didn't receive the email?",
+      "resend": "Resend",
+      "backToSignin": "Back to Sign In"
+    },
+    "forgotPassword": "Forgot Password",
+    "description": "No worries, we'll send your reset instructions",
+    "email": "Email",
+    "emailPlaceholder": "Enter email",
+    "sendResetLink": "Send Reset Link",
+    "backToSignin": "Back to Sign In",
+    "invalidEmail": "Email not Found."
+  },
+  "resetPassword": {
+    "resetPassword": "Reset Password",
+    "description": "Enter your new Password.",
+    "password": "Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
+    "backToSignin": "Back to Sign In"
+  },
+  "home": {
+    "header": {
+      "where": "Where",
+      "highlight": "Exquisite Taste and Talent",
+      "meetExperience": "Meet Experience",
+      "description": "Connect with top chefs, explore diverse cuisines, enjoy personalized culinary experiences and enjoy gourmet meals. Whether it’s a private or social event we bring the best to your table."
+    },
+    "mission": {
+      "title": "Our Culinary Mission",
+      "details": {
+        "about": "About Us",
+        "aboutDescription": "We bridge the gap between culinary enthusiasts and talented chefs, creating a space where culinary creativity thrives.",
+        "mission": "Mission",
+        "missionDescription": "We are committed to delivering exceptional food experiences, fostering community engagement, and driving innovation in the culinary world."
+      }
+    },
+    "services": {
+      "title": "Our Culinary Services",
+      "description": "Discover a world of culinary delights with our exclusive services. Whether you’re looking to host a private event with a personal chef, enjoy Gourmet meals delivered to your door, or want a full catering service, we have something for every foodie. Our platform connects you with professional chefs who bring diverse cuisines and unique experiences.",
+      "details": {
+        "service1": {
+          "title": "Order Gourmet Meals",
+          "description": "Savor exceptional, ready-to-eat meals crafted by top chefs. Choose from a wide range of dishes.",
+          "button": "Explore"
+        },
+        "service2": {
+          "title": "Private Chef Booking Experience",
+          "description": "Book top-tier pro chefs for unique private or public events.",
+          "button": "Meet Chefs"
+        },
+        "service3": {
+          "title": "Exquisite Catering for Every Occasion",
+          "description": "Our chefs provide full catering, delivering a gourmet experience that impresses guests.",
+          "button": "Host Event"
+        }
+      }
+    },
+    "howItWorks": {
+      "title": "How It Works",
+      "highlight": "Host Your Event",
+      "description": "With Ease",
+      "steps": {
+        "step1": {
+          "title": "Create Event",
+          "description": "Fill out event details."
+        },
+        "step2": {
+          "title": "Choose Chef",
+          "description": "Select a menu that suits your event and taste."
+        },
+        "step3": {
+          "title": "Send Request",
+          "description": "Send culinary request to chosen chefs."
+        },
+        "step4": {
+          "title": "Receive Chef Offers",
+          "description": "Receive chef offers for your event."
+        },
+        "step5": {
+          "title": "Confirm Offer",
+          "description": "Connect with chef and confirm offer and event details."
+        },
+        "step6": {
+          "title": "Pay Deposit",
+          "description": "Secure your booking by paying a 30% deposit directly to the cheif."
+        },
+        "step7": {
+          "title": "Send RSVPs",
+          "description": "Once confirmed by guests, sit back and relax."
+        }
+      }
+    },
+    "joinCommunity": {
+      "title": "Join Our Community",
+      "description": "Showcase your talent, connect with food lovers, and grow your culinary career. Sign up now to become part of our exclusive network!",
+      "button": "Join as Chef"
+    }
+  },
+  "invites": {
+    "invites": "Invites",
+    "status": "status",
+    "statusType": {
+      "all": "All",
+      "confirmed": "Confirmed",
+      "declined": "Declined",
+      "draft": "Draft",
+      "pending": "Pending"
+    },
+    "noInvites": "You don't have any invites."
+  },
+  "offers": {
+    "offers": "Offers",
+    "status": "status",
+    "statusType": {
+      "all": "All",
+      "confirmed": "Confirmed",
+      "declined": "Declined",
+      "draft": "Draft",
+      "pending": "Pending"
+    },
+    "noOffers": "You don't have any offers."
+  },
+  "events": {
+    "subtitle": "Create your event here.",
+    "addEvent": "Add Event",
+    "form": {
+      "name": "Event Name",
+      "namePlaceholder": "Enter Event Name",
+      "description": "Description",
+      "descriptionPlaceholder": "Enter Description",
+      "date": "Date",
+      "time": "Time",
+      "hours": "Hours",
+      "minutes": "Min",
+      "noGuests": "Nunmber of Guests",
+      "minimum": "Minimum",
+      "maximum": "Maximum",
+      "location": "Location",
+      "locationPlaceholder": "Choose Location",
+      "setYourLocation": "Set Your Location",
+      "createEvent": "Create Event",
+      "updateEvent": "Update Event"
+    }
+  },
+  "menus": {
+    "subtitle": "Create your menu here.",
+    "addMenu": "Add Menu",
+    "form": {
+      "title": "Menu",
+      "subtitle": "Choose your food",
+      "name": "Name",
+      "namePlaceholder": "Menu Name",
+      "description": "Description",
+      "descriptionPlaceholder": "Menu Description",
+      "course": "Course",
+      "courseNamePlaceholder": "Course Name",
+      "courseDescriptionPlaceholder": "Course Description",
+      "chooseImage": "Choose Image",
+      "showImage": "Show Image",
+      "addCourse": "Add Course",
+      "addMenu": "Add Menu"
+    }
+  }
+}

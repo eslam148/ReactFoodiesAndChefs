@@ -1,0 +1,27 @@
+.Monotype-Corsiva {
+  font-family: "Monotype Corsiva";
+  font-weight: 400;
+  font-style: italic;
+}
+.signika-negative {
+  font-family: "Signika Negative", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  color: linear-gradient(90deg, #fa8836 0%, #d96b1d 25.5%, #cf956c 100%);
+}
+.name-text {
+  display: inline-block;
+  font-size: 48px;
+  line-height: 1;
+  font-weight: black;
+  background: linear-gradient(90deg, #fa8836 0%, #d96b1d 25.5%, #cf956c 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.order-bg {
+  background-image: url("../../../assets/images/OrderBg.svg");
+  background-size: cover;
+  background-repeat: repeat-y;
+}

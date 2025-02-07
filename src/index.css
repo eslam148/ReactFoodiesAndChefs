@@ -8,8 +8,8 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; */
 }
 
 code {
@@ -26,4 +26,23 @@ code {
 
 .highlight {
   color: var(--custom-orange);
+}
+
+/* Appling Animations */
+.transition-smooth {
+  @apply transition-all duration-150 ease-in-out;
+}
+
+/* Fonts */
+
+/* Fixing Cummulative Layout Shift */
+.playwrite-us-modern {
+  font-family: "Playwrite US Modern", serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+
+  min-height: 100px; /* Adjust based on the expected text height */
+  margin: 0 auto; /* Center with consistency */
+  padding: 10px 20px; /* Adjust as needed */
 }

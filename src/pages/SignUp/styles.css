@@ -1,13 +1,12 @@
-* {
+/* * {
   font-family: "Cairo", sans-serif;
   font-optical-sizing: auto;
   font-weight: 500;
   font-style: normal;
-  font-variation-settings: "slnt" 0;
-}
+} */
 .hero-section {
   position: relative;
-  background-image: url("../../Newassets/Backgroundimage.jpeg");
+  background-image: url("../../assets/images/Backgroundimage.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -55,7 +54,6 @@
     width: 100%;
     height: 100%;
     background-color: #00000080; /* Black overlay with 60% opacity */
-    backdrop-filter: blur(10px);
     z-index: 1;
   }
 }

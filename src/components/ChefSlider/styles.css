@@ -1,3 +1,8 @@
+.slider {
+  width: 85vw;
+  margin: auto auto;
+}
+
 .chef {
   width: 8rem;
   height: 16rem;
@@ -6,7 +11,8 @@
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  box-shadow: 0 4px 12px rgba(250, 136, 54, 0.4);
+  box-shadow: 0 4px 12px rgba(250, 136, 54, 0.212);
+  cursor: pointer;
 }
 
 .chef img {
@@ -36,35 +42,39 @@
   }
 
   .chef img {
-    width: 6rem; /* Adjust the image size */
+    width: 6rem;
   }
 
   .chef h3 {
-    font-size: 1rem; /* Adjust font size */
+    font-size: 1rem;
   }
 
   .chef p {
-    font-size: 0.9rem; /* Adjust font size */
+    font-size: 0.9rem;
   }
 }
 
 /* Responsive design for very small screens (mobile) */
 @media (max-width: 480px) {
+  .slider {
+    width: 80vw;
+  }
+
   .chef {
-    width: 5rem; /* Even smaller width for small screens */
+    width: 5rem;
     height: 10rem;
-    padding: 0.5rem; /* Smaller padding */
+    padding: 0.5rem;
   }
 
   .chef img {
-    width: 5rem; /* Adjust the image size */
+    width: 5rem;
   }
 
   .chef h3 {
-    font-size: 0.8rem; /* Adjust font size */
+    font-size: 0.8rem;
   }
 
   .chef p {
-    font-size: 0.75rem; /* Adjust font size */
+    font-size: 0.75rem;
   }
 }

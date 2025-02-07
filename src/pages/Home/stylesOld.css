@@ -1,0 +1,178 @@
+/* Header Section */
+.header {
+  min-height: 80vh;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1rem;
+}
+
+.header-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.header-content h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  width: 40vw;
+  text-align: start;
+}
+
+.header img {
+  width: 100%;
+  max-width: 420px;
+  object-fit: cover;
+  transform: scaleX(-1); /* To make the chef look to the text */
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(250, 136, 54, 0.4);
+}
+
+/* Media Query for Tablets */
+@media (max-width: 1024px) {
+  .header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .header-content h1 {
+    font-size: 2.5rem;
+    width: 80%;
+    text-align: start;
+  }
+
+  .header img {
+    max-width: 300px;
+    margin-top: 1rem;
+  }
+}
+
+/* Media Query for Mobile Phones */
+@media (max-width: 768px) {
+  .header-content h1 {
+    font-size: 2rem;
+    width: 90%;
+  }
+
+  .header img {
+    max-width: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-content h1 {
+    font-size: 1.5rem;
+    line-height: 1.8;
+  }
+
+  .header img {
+    max-width: 200px;
+  }
+}
+
+/* How It works section */
+.how-it-works {
+  padding: 1rem 2rem;
+}
+
+.how-it-works h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.how-it-works .container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.how-it-works .container .card {
+  width: auto;
+  max-width: 40%;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(250, 136, 54, 0.4);
+  background-color: #000;
+}
+
+.how-it-works .card img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.how-it-works .card h3 {
+  font-size: 1.5rem;
+  margin: 1rem 0;
+}
+
+.how-it-works .card p {
+  font-size: 1rem;
+  margin: 1rem 0;
+}
+
+/* Media Query for Tablets */
+@media (max-width: 1024px) {
+  .how-it-works .container {
+    justify-content: center;
+  }
+
+  .how-it-works .container .card {
+    max-width: 45%;
+    padding: 1rem;
+  }
+
+  .how-it-works h1 {
+    font-size: 2.5rem;
+  }
+}
+
+/* Media Query for Mobile Phones */
+@media (max-width: 768px) {
+  .how-it-works .container .card {
+    max-width: 90%;
+    margin: 1rem 0;
+  }
+
+  .how-it-works h1 {
+    font-size: 2rem;
+  }
+
+  .how-it-works .card h3 {
+    font-size: 1.25rem;
+  }
+
+  .how-it-works .card p {
+    font-size: 0.9rem;
+  }
+}
+
+/* Media Query for Small Mobile Phones */
+@media (max-width: 480px) {
+  .how-it-works .card h3 {
+    font-size: 1.1rem;
+  }
+
+  .how-it-works .card p {
+    font-size: 0.8rem;
+  }
+}
+
+/* Chefs Section */
+.chefs-section {
+  padding: 1rem 2rem;
+}
+
+.chefs-section h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}

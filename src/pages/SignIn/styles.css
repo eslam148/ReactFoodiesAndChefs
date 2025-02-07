@@ -1,6 +1,14 @@
+.SignInPage {
+  font-family: "Cairo", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-variation-settings: "slnt" 0;
+}
+
 .hero-section {
   position: relative;
-  background-image: url("../../assets/images/BackgroundImg.jpeg");
+  background-image: url("../../assets/images/Backgroundimage.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -28,7 +36,6 @@
   position: relative;
   z-index: 2;
 }
-
 @media screen and (min-width: 769px) {
   .hero-section {
     background-position: top; /* Adjust background position for smaller screens */

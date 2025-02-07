@@ -1,0 +1,38 @@
+.mainbg {
+  background-image: url("../../assets/images/mainbg.webp");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@media screen and (max-width: 700px) {
+  .mainbg {
+    background-image: url("../../assets/images/dish.webp"),
+      url("../../assets/images/mainbg.webp");
+    background-position: top center, bottom center; /* Positions image1 at the top and image2 at the bottom */
+    background-repeat: no-repeat, no-repeat; /* Ensures images don't repeat */
+    background-size: cover, cover; /* Ensures images cover the element */
+    background-blend-mode: soft-light, normal;
+  }
+}
+
+/* Remove the arrows in the input field */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none; /* Removes the spinner in WebKit browsers */
+  margin: 0; /* Removes any margin */
+}
+
+/* Custom styling to hide the default date picker icon */
+.custom-date-icon::-webkit-calendar-picker-indicator {
+  background-color: thistle;
+}
+
+/* For Firefox */
+.custom-date-icon::-moz-calendar-picker-indicator {
+  background-color: thistle;
+}
+
+/* For IE */
+.custom-date-icon::-ms-expand {
+  background-color: thistle;
+}
