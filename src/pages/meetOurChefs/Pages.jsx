@@ -1,5 +1,5 @@
-import DishImg from "../../assets/images/dish.webp";
-import { useEffect, useState } from "react";
+
+ 
 import "./styles.css";
 import { useTranslation } from "react-i18next";
 import FourImagesGroup from "../../components/FourImagesGroup/Component";
@@ -13,11 +13,9 @@ import Img7 from "../../assets/images/img7.jpeg";
 import Img8 from "../../assets/images/img8.jpeg";
 function MeetOurChefs() {
   const { t } = useTranslation();
-  // const [invites, setInvites] = useState([]);
+ 
 
-  useEffect(() => {
-    // setInvites([]);
-  }, []);
+ 
 
   return (
     <main
@@ -242,15 +240,15 @@ function MeetOurChefs() {
           <h2 className="text-center text-main-color text-3xl md:text-5xl">{t("meetOurChefs.RecentEvents")}</h2>
           <p className="m-auto w-fit my-3 text-xl w-3/4 text-black">{t("meetOurChefs.DiscoverHowOurChefs")}</p>
           <div class="max-w-6xl mx-auto p-16 columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
-             <img src={Img1} class="w-full h-auto rounded-lg" />
-             <img src={Img2}  class="w-full h-auto rounded-lg" />
-             <img src={Img3}  class="w-full h-auto rounded-lg" />
-             <img src={Img4} class="w-full h-auto rounded-lg" />
-             <img src={Img5}  class="w-full h-auto rounded-lg" />
-             <img src={Img6}  class="w-full h-auto rounded-lg" />
-             <img src={Img7}  class="w-full h-auto rounded-lg" />
-             <img src={Img8}  class="w-full h-auto rounded-lg" />
-             <img src={Img1}  class="w-full h-auto rounded-lg" />
+             <img src={Img1} class="w-full h-auto rounded-lg" alt="" />
+             <img src={Img2}  class="w-full h-auto rounded-lg" alt="" />
+             <img src={Img3}  class="w-full h-auto rounded-lg" alt="" />
+             <img src={Img4} class="w-full h-auto rounded-lg" alt="" />
+             <img src={Img5}  class="w-full h-auto rounded-lg" alt="" />
+             <img src={Img6}  class="w-full h-auto rounded-lg" alt="" />
+             <img src={Img7}  class="w-full h-auto rounded-lg" alt="" />
+             <img src={Img8}  class="w-full h-auto rounded-lg" alt="" />
+             <img src={Img1}  class="w-full h-auto rounded-lg" alt="" />
         </div>
         </div>
         <div className="  rounded-3xl w-full p-20  flex flex-col gap-3">
@@ -322,7 +320,7 @@ function MeetOurChefs() {
 
                           <div class="absolute -top-10 start-4 w-20 h-20 rounded-full border-4 border-white overflow-hidden">
                           
-                            <img src="/static/media/ServiceImg1.87ae2fb75f8ab27f6a8b.webp" className="object-cover w-32 h-32 rounded-xl" alt="" />
+                            <img src="/static/media/ServiceImg1.87ae2fb75f8ab27f6a8b.webp" className="object-cover w-32 h-32 rounded-xl" alt="img" />
 
                           </div>
                       
