@@ -29,9 +29,9 @@ function InvitesPage() {
           className="w-full flex md:flex-row flex-col justify-center md:space-y-0 space-y-5"
         >
           <div className="relative flex flex-col  md:w-1/4 w-full  items-center">
-            <lable className="section-title font-medium self-start md:self-start lg:self-start text-start p">
+            <label className="section-title font-medium self-start md:self-start lg:self-start text-start p">
               {t("invites.status")}
-            </lable>
+            </label>
 
             <select
               name="status"

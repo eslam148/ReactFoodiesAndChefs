@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-// import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import FacebookImg from "../../../assets/images/facebook.svg";
 import InstagramImg from "../../../assets/images/instagram.svg";
 import XImg from "../../../assets/images/X.svg";
@@ -7,9 +8,10 @@ import DisFacebookImg from "../../../assets/images/DisFaceBook.svg";
 import DisInstagramImg from "../../../assets/images/DisInstagram.svg";
 import DisXImg from "../../../assets/images/DisX.svg";
 import "./styles.css";
+import { getEventByEventIdService } from "../../../services/events/events";
 
 function ShowEventPage() {
-  // const { eventId } = useParams();
+  const { eventId } = useParams();
   const [event, setEvent] = useState({});
   const [chefs, setChefs] = useState([]);
 
@@ -46,23 +48,18 @@ function ShowEventPage() {
         },
       },
     ]);
-    setEvent({
-      name: "Festival",
-      description: "Great Event",
-      date: "Aug 21 , 2024",
-      startDate: "07:00 PM",
-      endDate: "10:47 Pm",
-      minGuests: 10,
-      maxGuests: 50,
-      location: "Cairo Festival",
-      seatsRemaining: 50,
-    });
 
-    // const updateEvent = async (eventId) => {
-    //   const res = await getEventByEventId(eventId);
-    // };
+    const updateEvent = async (eventId) => {
+      const res = await getEventByEventIdService(eventId);
 
-    // updateEvent(eventId);
+      if (res && res.success) {
+        console.log(res.data);
+
+        setEvent(res.data);
+      }
+    };
+
+    updateEvent(eventId);
   }, []);
 
   return (
@@ -74,33 +71,37 @@ function ShowEventPage() {
         <div className="bg-[#D9D9D926] md:w-12/12 w-full flex flex-col plus-jakarta-sans text-[13px] md:text-[23px] p-3 py-6 space-y-5 border border-main-color rounded-[5px]">
           <div className="flex">
             <span className="md:w-2/12  w-7/12">Event name: </span>
-            <span className="w-10/12">{event?.name}</span>
+            <span className="w-10/12">{event?.eventName}</span>
           </div>
           <div className="flex">
             <span className="md:w-2/12 w-7/12">Description: </span>
-            <span className="w-10/12">{event?.description}</span>
+            <span className="w-10/12">{event?.eventDescription}</span>
           </div>
           <div className="flex">
             <span className="md:w-2/12  w-7/12">Date and time:</span>
             <span className="w-10/12 tracking-wide" id="duration-output">
-              This event will take place on {event.date} From {event.startDate}{" "}
-              until {event.endDate}
+              This event will take place on
+              <span className="text-main-color">{event.date}</span>
+              <br /> From{" "}
+              <span className="text-main-color">{event.startTime} </span>
+              <br />
+              until <span className="text-main-color">{event.endTime}</span>
             </span>
           </div>
           <div className="flex">
             <span className="md:w-2/12  w-7/12">Number of guests:</span>
-            <span className="w-10/12">{`${event?.minGuests} to ${event?.maxGuests} Guests`}</span>
+            <span className="w-10/12">{`${event?.minNumberOfInvetation} to ${event?.maxNumberOfInvetation} Guests`}</span>
           </div>
           <div className="flex">
             <span className="md:w-2/12  w-7/12">Location: </span>
-            <span className="w-10/12">{event?.location}</span>
+            <span className="w-10/12">{event?.generalLocation}</span>
           </div>
-          <div className="flex">
+          {/* <div className="flex">
             <span className="md:w-2/12  w-7/12">
-              Number of seats remaining:{" "}
+              Number of seats remaining:
             </span>
             <span className="w-10/12  m-auto">{event?.seatsRemaining}</span>
-          </div>
+          </div> */}
         </div>
 
         <p className="plus-jakarta-sans text-[15px] md:text-[26px]    md:pb-4 md:w-1/2 w-full">
@@ -142,8 +143,11 @@ function ShowEventPage() {
               </tr>
             </thead>
             <tbody className="bg-[#D9D9D926]">
-              {chefs.map((chef) => (
-                <tr className="grid md:grid-cols-5 grid-cols-6 gap-2 md:gap-2 my-5 text-center">
+              {chefs.map((chef, ind) => (
+                <tr
+                  key={ind}
+                  className="grid md:grid-cols-5 grid-cols-6 gap-2 md:gap-2 my-5 text-center"
+                >
                   <td className="text-start md:text-start md:text-[22px] mx-3 font-semibold text-[0.5rem] w-full">
                     <a href={`/chef/${chef.id}`} className="text-main-color">
                       {chef.name}
@@ -375,7 +379,7 @@ function ShowEventPage() {
             value="d11453f6-3629-49b8-8bc7-08dd3fb439ca"
           />
           <div className="flex  items-center justify-center w-full space-x-5 ">
-            <label for="Menu" className="text-[0.7rem] md:text-2xl">
+            <label htmlFor="Menu" className="text-[0.7rem] md:text-2xl">
               Menu
             </label>
             <select

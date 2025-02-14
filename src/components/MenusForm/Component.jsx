@@ -1,13 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DishImg2 from "../../assets/images/dish.webp";
 import { X } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import checkSignIn from "../../utils/checkSignIn";
 
 function MenusForm({ isNewMenu, menu, setMenu }) {
   const { t } = useTranslation();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImg, setModalImg] = useState(null);
+
+  useEffect(() => {
+    checkSignIn();
+  });
 
   return (
     <div className="mainbg overflow-hidden min-h-screen">

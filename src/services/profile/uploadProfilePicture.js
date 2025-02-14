@@ -12,11 +12,11 @@ const uploadProfilePicture = async (file, token) => {
             const imageUrl = res.data;
 
             // set the new profile picture
-            res = await fetch(`http://${process.env.REACT_APP_API_DOMAIN}/User/UploadProfileImage`, {
+            res = await fetch(`https://${process.env.REACT_APP_API_DOMAIN}/User/UploadProfileImage`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
+                    "Authorization": `Bearer ${token}`,
                 },
                 mode: "no-cors",
                 body: JSON.stringify({ imageUrl }),

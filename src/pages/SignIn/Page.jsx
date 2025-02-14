@@ -4,10 +4,13 @@ import "./styles.css";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import signinService from "../../services/authentication/signin";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 function SignInPage() {
   const { t } = useTranslation();
+
+  const [searchParams] = useSearchParams();
+  const redirect = searchParams.get("redirect");
 
   const [passwordVisible, setPasswordVisible] = useState(false);
 
@@ -31,7 +34,11 @@ function SignInPage() {
       setError("An error occurred. Please try again later.");
     } else if (res.success) {
       // Redirect to home page
-      navigate("/");
+      if (redirect) {
+        navigate(redirect);
+      } else {
+        navigate("/");
+      }
 
       // refresh page to update UI
       window.location.reload();

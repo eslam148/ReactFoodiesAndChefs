@@ -74,7 +74,7 @@ function ProfileForm({ isEditable, userData, setUserData }) {
         <div className="relative flex flex-col justify-center items-center">
           <label htmlFor="fileInput">
             <img
-              className="w-32 h-32 rounded-full object-cover cursor-pointer"
+              className="w-32 h-32 rounded-full object-cover"
               src={preview}
               alt="Profile"
             />

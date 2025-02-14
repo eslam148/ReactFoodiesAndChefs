@@ -8,8 +8,10 @@ function CreateEventsPage() {
     setEvent({
       hours: 0,
       minutes: 0,
-      minGuests: 1,
-      maxGuests: 2,
+      minNumberOfInvetation: 1,
+      maxNumberOfInvetation: 2,
+      latitude: 37.7749,
+      longitude: -122.4194,
     });
   }, []);
 

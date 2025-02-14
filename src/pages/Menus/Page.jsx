@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 import DishImg2 from "../../assets/images/dish.webp";
 import { useTranslation } from "react-i18next";
+import checkSignIn from "../../utils/checkSignIn";
 
 function MenusPage() {
   const { t } = useTranslation();
 
   const [menus, setMenus] = useState([]);
+
+  useEffect(() => {
+    checkSignIn();
+  });
 
   useEffect(() => {
     setMenus([

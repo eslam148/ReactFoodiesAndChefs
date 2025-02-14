@@ -3,17 +3,20 @@ import CompleteArrowDownImg from "../../assets/images/CompleteArrowDown.svg";
 import ProfileTempImg from "../../assets/images/profileTemp.webp";
 import LanguageButton from "../LanguageButton/Components";
 import "./styles.css";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import isJwtTokenValid from "../../utils/validateToken";
 import signoutService from "../../services/authentication/signout";
 import { useNavigate } from "react-router-dom";
 import resetLocalStorage from "../../utils/resetLocalStorage";
 import LogoImg from "../../assets/images/logo.webp";
+import NotificationsModal from "../NotificationsModal/Component";
 
 function Navbar() {
   const { t } = useTranslation();
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [userData, setUserData] = useState("");
+  const [notifications] = useState([]);
+  const [showNotifications, setShowNotifications] = useState(false);
 
   const navigate = useNavigate();
 
@@ -58,6 +61,12 @@ function Navbar() {
     const overlay = document.getElementById("overlay");
     overlay.classList.toggle("hidden");
   };
+
+  const toggleNotifications = useCallback(() => {
+    console.log("toggleNotification");
+
+    setShowNotifications((prev) => !prev);
+  }, []);
 
   return (
     <nav>
@@ -146,7 +155,14 @@ function Navbar() {
                   {t("navigation.offers")}
                 </a>
               </li>
-
+              <li>
+                <a
+                  className="menu-item text-white font-bold text-lg hover:text-orange-500 rounded-[35px]"
+                  href="/MeetOurChefs"
+                >
+                  {t("navigation.MeetOurChefs")}
+                </a>
+              </li>
               <li>
                 <LanguageButton />
               </li>
@@ -161,55 +177,26 @@ function Navbar() {
             <div className="dropdown">
               <button
                 className="relative inline-block mr-5 bg-transparent"
-                id="notificationButton"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
+                onClick={() => toggleNotifications()}
               >
-                {/* Bell Icon */}
                 <i className="text-2xl md:text-3xl text-[#DADADA] fa-regular fa-bell"></i>
 
-                {/* Notification Badge */}
-                <span
-                  id="notificationCount"
-                  className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-[#B3261E] rounded-full transform translate-x-1/2 -translate-y-1/2"
-                >
-                  0
-                </span>
+                {notifications && notifications.length > 0 && (
+                  <span
+                    id="notificationCount"
+                    className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-[#B3261E] rounded-full transform translate-x-1/2 -translate-y-1/2"
+                  >
+                    {notifications.length}
+                  </span>
+                )}
               </button>
 
-              <div
-                id="notification-list"
-                aria-labelledby="notificationButton"
-                className="hidden z-20 top-12 w-3/4 md:w-4/12 absolute mt-2 text-black bg-white shadow-lg rounded-lg
-                                ltr:right-20 rtl:left-20"
-              >
-                <div className="flex justify-between bg-[#D9D9D9] h-[38px] p-2 border-2 border-black">
-                  <span className="font-semibold bg">Notifications</span>
-                  <button id="close_Notification">
-                    <svg
-                      width="19"
-                      height="17"
-                      viewBox="0 0 19 17"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M17.2188 0H1.78125C0.797852 0 0 0.797852 0 1.78125V14.8438C0 15.8271 0.797852 16.625 1.78125 16.625H17.2188C18.2021 16.625 19 15.8271 19 14.8438V1.78125C19 0.797852 18.2021 0 17.2188 0ZM14.1164 10.7803C14.2945 10.9584 14.2945 11.2479 14.1164 11.426L12.6135 12.9289C12.4354 13.107 12.1459 13.107 11.9678 12.9289L9.5 10.4389L7.03223 12.9289C6.8541 13.107 6.56465 13.107 6.38652 12.9289L4.88359 11.426C4.70547 11.2479 4.70547 10.9584 4.88359 10.7803L7.37363 8.3125L4.88359 5.84473C4.70547 5.6666 4.70547 5.37715 4.88359 5.19902L6.38652 3.69609C6.56465 3.51797 6.8541 3.51797 7.03223 3.69609L9.5 6.18613L11.9678 3.69609C12.1459 3.51797 12.4354 3.51797 12.6135 3.69609L14.1164 5.19902C14.2945 5.37715 14.2945 5.6666 14.1164 5.84473L11.6264 8.3125L14.1164 10.7803Z"
-                        fill="black"
-                      />
-                    </svg>
-                  </button>
-                </div>
-
-                <div
-                  id="Notification-repet"
-                  className="max-h-72 overflow-y-auto border-2 border-black border-t-0"
-                >
-                  {/* Notification Item */}
-
-                  {/* Repeat more notifications as needed */}
-                </div>
-              </div>
+              {showNotifications && (
+                <NotificationsModal
+                  notifications={notifications}
+                  toggleNotifications={toggleNotifications}
+                />
+              )}
             </div>
 
             {/* Profile Dropdown */}
@@ -314,6 +301,7 @@ function Navbar() {
                 {t("navigation.menus")}
               </a>
             </li>
+            
             <li>
               <a
                 className="block px-4 py-2 rounded text-white font-bold text-lg hover:bg-gray-700"
@@ -322,7 +310,15 @@ function Navbar() {
                 {t("navigation.offers")}
               </a>
             </li>
-
+            
+            <li>
+              <a
+                className="block px-4 py-2 rounded text-white font-bold text-lg hover:bg-gray-700"
+                href="/MeetOurChefs"
+              >
+                {t("navigation.MeetOurChefs")}
+              </a>
+            </li>
             <li>
               <LanguageButton />
             </li>
