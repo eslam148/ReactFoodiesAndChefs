@@ -1,5 +1,5 @@
 
- 
+import { useEffect, useState } from "react";
 import "./styles.css";
 import { useTranslation } from "react-i18next";
 import FourImagesGroup from "../../components/FourImagesGroup/Component";
@@ -13,9 +13,11 @@ import Img7 from "../../assets/images/img7.jpeg";
 import Img8 from "../../assets/images/img8.jpeg";
 function MeetOurChefs() {
   const { t } = useTranslation();
- 
+  // const [invites, setInvites] = useState([]);
 
- 
+  useEffect(() => {
+    // setInvites([]);
+  }, []);
 
   return (
     <main
