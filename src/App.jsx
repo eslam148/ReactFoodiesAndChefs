@@ -15,7 +15,7 @@ import EditProfilePage from "./pages/Profile/Edit/Page";
 import InvitesPage from "./pages/Invites/Pages";
 import VerifyOtpPage from "./pages/VerifyOtp/Page";
 import ForgotPasswordConfirmationPage from "./pages/ForgotPassword/Confirmation/Page";
-import ResetPasswordPage from "./pages/ResetPassword/Page";
+import ResetPasswordPage from "./pages/resetPassword/Page";
 import MenusPage from "./pages/Menus/Page";
 import EditEventsPage from "./pages/Events/Edit/Page";
 import GoogleMapsPage from "./pages/GoogleMaps/Page";
