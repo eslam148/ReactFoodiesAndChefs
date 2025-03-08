@@ -12,7 +12,9 @@ function NavbarHider() {
     "/forgotPassword",
     "/forgotPassword/confirmEmail",
     "/resetPassword",
-    "/MeetOurChefs"
+    "/MeetOurChefs",
+    "/Chat"
+
   ];
   const hideNavbar = routesWithoutNavbar.includes(location.pathname);
 
