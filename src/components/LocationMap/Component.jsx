@@ -12,13 +12,13 @@ const customIcon = new L.Icon({
   shadowSize: [41, 41],
 });
 
-const LocationMap = ({ latitude, longitude }) => {
+const LocationMap = ({ location, latitude, longitude }) => {
   if (!latitude || !longitude) {
     return <p className="text-red-500">Location not available</p>;
   }
 
   return (
-    <div className="w-full h-full rounded-lg overflow-hidden shadow-lg border border-gray-300">
+    <div className="w-full h-full rounded-lg overflow-hidden shadow-lg border border-gray-300 z-10">
       <MapContainer
         center={[latitude, longitude]}
         zoom={13}
@@ -29,7 +29,7 @@ const LocationMap = ({ latitude, longitude }) => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         />
         <Marker position={[latitude, longitude]} icon={customIcon}>
-          <Popup>Your Location</Popup>
+          <Popup>{location}</Popup>
         </Marker>
       </MapContainer>
     </div>

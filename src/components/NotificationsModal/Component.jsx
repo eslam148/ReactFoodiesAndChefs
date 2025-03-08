@@ -1,6 +1,19 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useTranslation } from "react-i18next";
 import NotificationImg from "../../assets/images/NotificationFoodiesLogo.svg";
+import getNotificationDuration from "../../utils/getNotificationDuration";
 
-function NotificationsModal({ notifications, toggleNotifications }) {
+function NotificationsModal({ notifications, toggleNotifications, navigate }) {
+  const { t, i18n } = useTranslation();
+
+  const handleNotificationClick = (notification) => {
+    if (notification?.title) {
+      // todo: uncomment this line when routes coming from backend gets changed and comment next line
+      // navigate(notification?.title || "#");
+      navigate("#");
+    }
+  };
+
   return (
     <div
       id="notification-list"
@@ -9,7 +22,9 @@ function NotificationsModal({ notifications, toggleNotifications }) {
     >
       {/* Header */}
       <div className="flex justify-between bg-[#D9D9D9] h-[38px] p-2 border-2 border-black">
-        <span className="font-semibold">Notifications</span>
+        <span className="font-semibold">
+          {t("notifications.notifications")}
+        </span>
         <button
           id="close_Notification"
           className="focus:outline-none bg-transparent"
@@ -36,35 +51,54 @@ function NotificationsModal({ notifications, toggleNotifications }) {
         id="Notification-repet"
         className="max-h-72 overflow-y-auto border-2 border-black border-t-0"
       >
-        {notifications.map((notification, index) => (
-          <a
-            key={index}
-            href={notification?.link || "#"}
-            className="relative flex justify-between border-b-[0.5px] border-[#A9A9A9] h-[84px] hover:bg-gray-100 "
-          >
+        {notifications && notifications.length > 0 ? (
+          <>
+            {notifications.map((notification, index) => (
+              <div
+                key={index}
+                className="relative flex justify-between border-b-[0.5px] border-[#A9A9A9] h-[84px] hover:bg-gray-100 cursor-pointer"
+                onClick={() => handleNotificationClick(notification)}
+              >
+                <div className="flex m-2 space-x-3 rtl:space-x-reverse">
+                  <img
+                    className="rounded-full w-16 h-16"
+                    src={notification?.img || NotificationImg}
+                    alt="NotificationFoodiesLogo"
+                  />
+                  <div className="flex flex-col items-start justify-center w-8/12">
+                    <h1 className="font-bold text-black md:text-base text-sm">
+                      {notification?.senderName}
+                    </h1>
+                    <p className="font-medium md:text-sm text-[0.6rem] text-[#8A8787] text-start">
+                      {i18n.language === "en"
+                        ? notification?.message
+                        : notification?.messageAr}
+                    </p>
+                  </div>
+                </div>
+                <div
+                  className="absolute bottom-1 font-medium text-[9px] text-[#8A8787] md:w-3/12 w-3/12 sm:text-[12px] md:text-[13px] lg:text-[14px] end-0"
+                  data-time="Thu Jan 16 2025 13:31:28 GMT+0200 (Eastern European Standard Time)"
+                >
+                  {getNotificationDuration(
+                    notification?.createdAt,
+                    i18n.language
+                  )}
+                </div>
+              </div>
+            ))}
+          </>
+        ) : (
+          <>
             <div className="flex m-2 space-x-3 rtl:space-x-reverse">
-              <img
-                className="rounded-full w-16 h-16"
-                src={notification?.img || NotificationImg}
-                alt="NotificationFoodiesLogo"
-              />
               <div className="flex flex-col items-start justify-center w-8/12">
                 <h1 className="font-semibold md:text-base text-sm">
-                  {notification?.title}
+                  {t("notifications.noNotifications")}
                 </h1>
-                <p className="font-medium md:text-sm text-[0.6rem] text-[#8A8787] text-start">
-                  {notification?.description}
-                </p>
               </div>
             </div>
-            <div
-              className="absolute bottom-1 font-medium text-[9px] text-[#8A8787] md:w-3/12 w-3/12 sm:text-[12px] md:text-[13px] lg:text-[14px] end-0"
-              data-time="Thu Jan 16 2025 13:31:28 GMT+0200 (Eastern European Standard Time)"
-            >
-              25 day ago
-            </div>
-          </a>
-        ))}
+          </>
+        )}
       </div>
     </div>
   );

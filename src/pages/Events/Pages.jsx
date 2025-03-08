@@ -3,11 +3,13 @@ import DishImg2 from "../../assets/images/dish.webp";
 import { useTranslation } from "react-i18next";
 import { getAllEventsService } from "../../services/events/events";
 import checkSignIn from "../../utils/checkSignIn";
+import LoadingSpinner from "../../components/Spinner/Component";
 
 function EventsPage() {
   const { t } = useTranslation();
 
   const [events, setEvents] = useState([]);
+  const [isEventsLoading, setIsEventsLoading] = useState(false);
 
   useEffect(() => {
     checkSignIn();
@@ -15,13 +17,22 @@ function EventsPage() {
 
   useEffect(() => {
     const getAllEvents = async () => {
-      const res = await getAllEventsService(1, 10);
+      setIsEventsLoading(true);
 
-      if (res && res.success) {
-        console.log(res.data.data);
+      try {
+        const res = await getAllEventsService(1, 10);
 
-        setEvents(res.data.data);
+        if (res && res.success) {
+          console.log(res);
+
+          setEvents(res.data.data);
+        }
+      } catch (err) {
+        console.log("Error in getting all events");
+        console.log(err);
       }
+
+      setIsEventsLoading(false);
     };
 
     getAllEvents();
@@ -50,39 +61,57 @@ function EventsPage() {
             {t("events.addEvent")}
           </a>
         </div>
-        {events.map((event, ind) => (
-          <div
-            className="bg-main-color h-[53px] flex justify-between w-full items-center p-6 "
-            style={{ borderRadius: "16px" }}
-            key={ind}
-          >
-            <div className="font-bold text-xl md:w-full flex justify-between gap-0 md:gap-2 flex-col md:flex-row me-4">
-              <span className="font-bold md:text-[18px] text-[14px]">
-                {event.eventName}
-              </span>
-              <span className="date font-bold	md:text-[18px] text-[12px]">
-                {event.date ? event.date.split("T")[0] : ""}
-              </span>
-            </div>
-            <div
-              className="flex text-center justify-end gap-2 md:w-3/12"
-              dir="auto"
-            >
-              <a
-                className="md:h-[35px] h-[24px] md:w-[85px] w-[44px] bg-white text-main-color p-0.5 md:p-0 my-auto  border-[3px] border-white   font-bold md:text-[18px] text-[10px]  hover:bg-[#000000]  hover:border-[3px] hover:border-[#000000] rounded-[40px]	"
-                href={`/events/edit/${event.eventId}`}
+        {events && events.length <= 0 ? (
+          <>
+            {isEventsLoading ? (
+              <div className="flex justify-center items-center">
+                <LoadingSpinner />
+              </div>
+            ) : (
+              <div>
+                <h2 className="text-white md:text-4xl text-s my-20 font-bold text-center">
+                  You Don't have any Events yet.
+                </h2>
+              </div>
+            )}
+          </>
+        ) : (
+          <>
+            {events.map((event, ind) => (
+              <div
+                className="bg-main-color h-[53px] flex justify-between w-full items-center p-6 "
+                style={{ borderRadius: "16px" }}
+                key={ind}
               >
-                {t("global.edit")}
-              </a>
-              <a
-                className=" md:h-[35px] h-[24px] md:w-[85px] w-[44px]  bg-white text-main-color p-0.5 md:p-0 my-auto  border-[3px] border-white     font-bold md:text-[18px] text-[10px] 	 hover:bg-[#000000]   hover:border-[3px] hover:border-[#000000] rounded-[40px]"
-                href={`/events/${event.eventId}`}
-              >
-                {t("global.show")}
-              </a>
-            </div>
-          </div>
-        ))}
+                <div className="font-bold text-xl md:w-full flex justify-between gap-0 md:gap-2 flex-col md:flex-row me-4">
+                  <span className="font-bold md:text-[18px] text-[14px]">
+                    {event.eventName}
+                  </span>
+                  <span className="date font-bold	md:text-[18px] text-[12px]">
+                    {event.date ? event.date.split("T")[0] : ""}
+                  </span>
+                </div>
+                <div
+                  className="flex text-center justify-end gap-2 md:w-3/12"
+                  dir="auto"
+                >
+                  <a
+                    className="md:h-[35px] h-[24px] md:w-[85px] w-[44px] bg-white text-main-color p-0.5 md:p-0 my-auto  border-[3px] border-white   font-bold md:text-[18px] text-[10px]  hover:bg-[#000000]  hover:border-[3px] hover:border-[#000000] rounded-[40px]	"
+                    href={`/events/edit/${event.eventId}`}
+                  >
+                    {t("global.edit")}
+                  </a>
+                  <a
+                    className=" md:h-[35px] h-[24px] md:w-[85px] w-[44px]  bg-white text-main-color p-0.5 md:p-0 my-auto  border-[3px] border-white     font-bold md:text-[18px] text-[10px] 	 hover:bg-[#000000]   hover:border-[3px] hover:border-[#000000] rounded-[40px]"
+                    href={`/events/${event.eventId}`}
+                  >
+                    {t("global.show")}
+                  </a>
+                </div>
+              </div>
+            ))}
+          </>
+        )}
         <div className="flex justify-center mt-6 gap-2">
           <button
             disabled
@@ -161,7 +190,7 @@ function EventsPage() {
       <section className="w-5/12 hidden md:flex justify-end ltr:border-l rtl: border-r border-main-color">
         <img
           src={DishImg2}
-          className="h-[40rem] object-cover"
+          className="w-[32rem] h-[38rem] object-cover"
           alt="FoodImage"
         />
       </section>

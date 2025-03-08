@@ -15,8 +15,6 @@ function EditEventsPage() {
       const res = await getEventByEventIdService(eventId);
 
       if (res && res.success) {
-        console.log(res);
-
         const { hours, minutes } = getHoursAndMinutesDifference(
           res.data.startTime,
           res.data.endTime

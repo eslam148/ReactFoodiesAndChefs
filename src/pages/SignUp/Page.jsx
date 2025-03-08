@@ -18,6 +18,8 @@ function SignUpPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [role, setRole] = useState("Foodies");
+
+  const [passowrdError, setPasswordError] = useState("");
   const [error, setError] = useState(null);
 
   const togglePasswordVisibility = (id, iconId) => {
@@ -127,8 +129,10 @@ function SignUpPage() {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      setError("Password does not match");
+      setPasswordError("Password does not match");
       return;
+    } else {
+      setPasswordError("");
     }
 
     // Call API to sign up user
@@ -143,12 +147,21 @@ function SignUpPage() {
       role,
     });
 
+    console.log(res);
+
     if (!res) {
       setError("An error occurred. Please try again later.");
     } else if (res.success && res.data.userId) {
-      naviagte("/verifyOtp?userId=" + res.data.userId);
+      naviagte(`/verifyOtp?userId=${res.data.userId}&email=${email}`);
     } else {
-      setError(res.message);
+      let temp = "";
+      res.data.forEach((err) => {
+        temp += err + "\n";
+      });
+
+      console.log(temp);
+
+      setError(temp);
     }
   };
 
@@ -342,11 +355,6 @@ function SignUpPage() {
                   id="Phone"
                 />
               </div>
-              <span
-                className="text-red-500 text-start w-full text-[0.7rem] lg:text-sm field-validation-valid"
-                data-valmsg-for="Phone"
-                data-valmsg-replace="true"
-              ></span>
               <p
                 id="countryCodeError"
                 className="hidden text-red-500 text-start w-full text-[0.7rem] lg:text-sm "
@@ -379,11 +387,6 @@ function SignUpPage() {
                   }
                 ></i>
               </div>
-              <span
-                className="text-red-500 text-start w-full text-[0.7rem] lg:text-sm field-validation-valid"
-                data-valmsg-for="Password"
-                data-valmsg-replace="true"
-              ></span>
             </div>
             <div className="flex flex-col w-1/2 ">
               <div className="relative w-full">
@@ -416,7 +419,7 @@ function SignUpPage() {
                 data-valmsg-for="Comfirm_Password"
                 data-valmsg-replace="true"
               >
-                {error}
+                {passowrdError}
               </span>
             </div>
           </div>
@@ -471,7 +474,9 @@ function SignUpPage() {
             </div>
           </div>
 
-          {/* Sign In Link */}
+          <div className="text-red-500 font-bold mt-12 text-center" id="error">
+            {error}
+          </div>
 
           {/* Sign Up Button */}
           <button
@@ -481,6 +486,8 @@ function SignUpPage() {
           >
             {t("signup.signup")}
           </button>
+
+          {/* Sign In Link */}
           <p className="text-base	font-medium	text-white text-start">
             {t("signup.alreadyHaveAccount")}{" "}
             <a className="text-blue-500 hover:underline" href="/signin">

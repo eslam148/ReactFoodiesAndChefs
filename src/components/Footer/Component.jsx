@@ -52,7 +52,7 @@ function Footer() {
               <a href="/menus">{t("navigation.menus")}</a>
             </li>
             <li>
-              <a href="/offers">{t("navigation.offers")}</a>
+              <a href="/requests">{t("navigation.requests")}</a>
             </li>
           </ul>
         </div>

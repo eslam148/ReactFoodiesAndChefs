@@ -1,9 +1,11 @@
-const uploadFileService = async (file, token) => {
+const uploadFileService = async (file) => {
     try {
+        const token = localStorage.getItem("token");
+
         const formData = new FormData();
         formData.append("file", file);
 
-        const res = await fetch(`https://${process.env.REACT_APP_API_DOMAIN}/Upload/UploadFile`, {
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/Upload/UploadFile`, {
             method: "POST",
             headers: {
                 "Authorization": `Bearer ${token}`,
@@ -16,9 +18,6 @@ const uploadFileService = async (file, token) => {
         }
 
         const data = await res.json();
-
-        console.log("File Upload");
-        console.log(data);
 
         return data;
     } catch (err) {

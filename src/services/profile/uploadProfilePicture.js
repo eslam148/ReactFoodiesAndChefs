@@ -2,29 +2,29 @@ import uploadFileService from "../uploadFileService";
 
 const uploadProfilePicture = async (file, token) => {
     try {
-        let res = await uploadFileService(file, token);
-
-        console.log("Upload Profile Picture");
-
-        console.log(res);
+        let res = await uploadFileService(file);
 
         if (res.success) {
             const imageUrl = res.data;
 
+            const jsonData = {
+                ProfileImageLink: imageUrl,
+            }
+
+            const queryParams = new URLSearchParams(jsonData).toString();
+
             // set the new profile picture
-            res = await fetch(`https://${process.env.REACT_APP_API_DOMAIN}/User/UploadProfileImage`, {
+            res = await fetch(`${process.env.REACT_APP_API_URL}/User/EditProfile?${queryParams}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`,
                 },
-                mode: "no-cors",
-                body: JSON.stringify({ imageUrl }),
             });
 
             const data = await res.json();
 
-            console.log("Profile Picture Upload");
+            console.log("Chnaged Profile Picture");
             console.log(data);
 
             return data;

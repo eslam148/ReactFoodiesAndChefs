@@ -2,7 +2,7 @@ export const getEventByEventIdService = async (eventId) => {
     try {
         const token = localStorage.getItem("token");
 
-        const res = await fetch(`https://${process.env.REACT_APP_API_DOMAIN}/Home/GetEventById?eventId=${eventId}`, {
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/Home/GetEventById?eventId=${eventId}`, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`,
@@ -22,7 +22,7 @@ export const getAllEventsService = async (pageNum = 1, pageSize = 10) => {
     try {
         const token = localStorage.getItem("token");
 
-        const res = await fetch(`https://${process.env.REACT_APP_API_DOMAIN}/Home/GetMyEvents?page=${pageNum}&pageSize=${pageSize}`, {
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/Home/GetMyEvents?page=${pageNum}&pageSize=${pageSize}`, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`,
@@ -42,7 +42,7 @@ export const createEventService = async (event) => {
     try {
         const token = localStorage.getItem("token")
 
-        const res = await fetch(`https://${process.env.REACT_APP_API_DOMAIN}/Home/CreateEvent`, {
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/Home/CreateEvent`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -69,7 +69,7 @@ export const updateEventService = async (event) => {
         console.log(event);
 
 
-        const res = await fetch(`https://${process.env.REACT_APP_API_DOMAIN}/Home/EditEvent`, {
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/Home/EditEvent`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

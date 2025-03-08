@@ -13,7 +13,7 @@ function LanguageButton() {
 
   return (
     <button
-      className="menu-item text-white bg-transparent font-bold text-lg hover:text-orange-500 rounded-[35px]"
+      className="menu-item text-white bg-transparent font-bold text-lg transition-smooth hover:text-orange-500 rounded-[35px]"
       onClick={() => handleLanguageChange(i18n.language === "en" ? "ar" : "en")}
       style={{ cursor: "pointer" }}
     >

@@ -11,11 +11,16 @@
     "invites": "Invites",
     "menus": "Menus",
     "offers": "Offers",
-    "MeetOurChefs":"Meet Our Chefs",
+    "requests": "Requests",
+    "MeetOurChefs": "Meet Our Chefs",
     "signin": "Sign In",
     "signout": "Sign Out",
     "profile": "Profile",
     "copyrights": "© 2025 Foodies and Chefs. All rights reserved."
+  },
+  "notifications": {
+    "notifications": "Notifications",
+    "noNotifications": "You don't have any notifications."
   },
   "signin": {
     "signin": "Sign In",
@@ -175,6 +180,18 @@
     },
     "noOffers": "You don't have any offers."
   },
+  "requests": {
+    "requests": "Requests",
+    "status": "status",
+    "statusType": {
+      "all": "All",
+      "confirmed": "Confirmed",
+      "declined": "Declined",
+      "draft": "Draft",
+      "pending": "Pending"
+    },
+    "noRequests": "You don't have any requests."
+  },
   "events": {
     "subtitle": "Create your event here.",
     "addEvent": "Add Event",
@@ -200,6 +217,7 @@
   "menus": {
     "subtitle": "Create your menu here.",
     "addMenu": "Add Menu",
+    "showMenu": "Show Menu",
     "form": {
       "title": "Menu",
       "subtitle": "Choose your food",
@@ -213,32 +231,36 @@
       "chooseImage": "Choose Image",
       "showImage": "Show Image",
       "addCourse": "Add Course",
-      "addMenu": "Add Menu"
+      "addMenu": "Add Menu",
+      "updateMenu": "Update Menu"
+    },
+    "errors": {
+      "noCourses": "Please Add courses to your menu."
     }
   },
-  "meetOurChefs":{
-    "searchPlaceholder":"Search",
-    "Explorechefprofiles":"Explore chef profiles and elevate your dining experience. Order gourmet meals or book chefs to host your next event with ease.",
-    "MeetOurChefs":"Meet Our Chefs",
-    "BenefitsofBookingPrivateChefs":"Benefits of Booking Private Chefs",
-    "IndulgeInaCulinary":"Indulge in a culinary journey tailored to your taste and preferences.",
-    "CustomizedMenus":"Customized Menus",
-    "OurChefsCraft":"Our chefs craft personalized menus tailored to your tastes and dietary desires.",
-    "FineDining":"Fine Dining Made Easy",
-    "EnjoyGourmet":"Enjoy gourmet fine dining anywhere with our expert chefs.",
-    "UniqueCulinary":"Unique Culinary Experience",
-    "DelightYourGuests":"Delight your guests with a unique culinary journey as our chefs cook and engage, making your event truly exceptional.",
-    "Catering":"Catering",
-    "Book":"Book",
-    "Order":"Order",
-    "ChatNow":"Chat Now",
-    "ExploreTopChefDishes":"Explore Top Chef Dishes",
-    "ExploreDiverse":"Explore a diverse collection of meals to spark your culinary creativity.",
-    "WhatOurChefsareSaying":"What Our Chefs are Saying!",
-    "DiscoverHowOurChefs":"Discover how our chefs feel about joining our community and using our dashboard to manage their connections.",
-    "NeedMoreHelp":"Need More Help?",
-    "RecentEvents":"Recent Events ",
-    "CheckOutWhat":"Check out what our community is up too! Be inspired by exceptional culinary experience. From intimate dinners to grand celebrations, see how our chefs are making every event unforgettable.",
-    "ContactUs":"Contact Us"
+  "meetOurChefs": {
+    "searchPlaceholder": "Search",
+    "Explorechefprofiles": "Explore chef profiles and elevate your dining experience. Order gourmet meals or book chefs to host your next event with ease.",
+    "MeetOurChefs": "Meet Our Chefs",
+    "BenefitsofBookingPrivateChefs": "Benefits of Booking Private Chefs",
+    "IndulgeInaCulinary": "Indulge in a culinary journey tailored to your taste and preferences.",
+    "CustomizedMenus": "Customized Menus",
+    "OurChefsCraft": "Our chefs craft personalized menus tailored to your tastes and dietary desires.",
+    "FineDining": "Fine Dining Made Easy",
+    "EnjoyGourmet": "Enjoy gourmet fine dining anywhere with our expert chefs.",
+    "UniqueCulinary": "Unique Culinary Experience",
+    "DelightYourGuests": "Delight your guests with a unique culinary journey as our chefs cook and engage, making your event truly exceptional.",
+    "Catering": "Catering",
+    "Book": "Book",
+    "Order": "Order",
+    "ChatNow": "Chat Now",
+    "ExploreTopChefDishes": "Explore Top Chef Dishes",
+    "ExploreDiverse": "Explore a diverse collection of meals to spark your culinary creativity.",
+    "WhatOurChefsareSaying": "What Our Chefs are Saying!",
+    "DiscoverHowOurChefs": "Discover how our chefs feel about joining our community and using our dashboard to manage their connections.",
+    "NeedMoreHelp": "Need More Help?",
+    "RecentEvents": "Recent Events ",
+    "CheckOutWhat": "Check out what our community is up too! Be inspired by exceptional culinary experience. From intimate dinners to grand celebrations, see how our chefs are making every event unforgettable.",
+    "ContactUs": "Contact Us"
   }
 }

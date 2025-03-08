@@ -1,0 +1,35 @@
+.inv-card-bg-img-1 {
+  position: relative;
+  background-image: url("../../../assets/images/invCardBG1.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.inv-card-bg-img-1::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Adjust opacity */
+}
+
+.mainbg-dark {
+  background-image: url("../../../assets/images/mainbg.webp");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-blend-mode: darken; /* Darkens the background image */
+  background-color: rgba(0, 0, 0, 0.25); /* Adjust darkness */
+}
+
+@media screen and (max-width: 700px) {
+  .mainbg-dark {
+    background-image: url("../../../assets/images/dish.webp"),
+      url("../../../assets/images/mainbg.webp");
+    background-position: top center, bottom center; /* Positions image1 at the top and image2 at the bottom */
+    background-repeat: no-repeat, no-repeat; /* Ensures images don't repeat */
+    background-size: cover, cover; /* Ensures images cover the element */
+    background-blend-mode: soft-light, normal;
+  }
+}

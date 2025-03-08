@@ -1,6 +1,6 @@
 const signinService = async (email, password) => {
     try {
-        const res = await fetch(`https://${process.env.REACT_APP_API_DOMAIN}/User/SignIn`, {
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/User/SignIn`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -10,8 +10,7 @@ const signinService = async (email, password) => {
 
         const signinData = await res.json();
 
-        console.log(signinData);
-        console.log(signinData);
+         
 
         if (signinData.success) {
             localStorage.setItem("token", signinData.token);

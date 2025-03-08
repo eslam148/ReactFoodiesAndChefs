@@ -20,6 +20,7 @@ function EventsForm({ isNewEvent, event, setEvent }) {
   const today = new Date();
   const todayDate = today.toISOString().split("T")[0]; // Converts to yyyy-mm-dd format
   const [endTime, setEndTime] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     checkSignIn();
@@ -66,6 +67,11 @@ function EventsForm({ isNewEvent, event, setEvent }) {
     e.preventDefault();
 
     try {
+      if (event.minNumberOfInvetation > event.maxNumberOfInvetation) {
+        setError("Maximum number of invites should be bigger than minimum.");
+        return;
+      }
+
       const eventToSubmit = {
         ...event,
         date: new Date(event.date).toISOString(),
@@ -85,7 +91,7 @@ function EventsForm({ isNewEvent, event, setEvent }) {
 
         if (res && res.success) {
           // Redirect to the events page
-          // window.location.href = `/events/${res.data.id}`;
+          window.location.href = `/events/${res.data.eventId}`;
         }
       }
     } catch (err) {
@@ -206,7 +212,10 @@ function EventsForm({ isNewEvent, event, setEvent }) {
                       className="w-4 h-4 text-gray-500 bg-transparent rounded-md flex items-center justify-center focus:outline-none"
                       onClick={() => {
                         if (event.hours < 23) {
-                          setEvent({ ...event, hours: event.hours + 1 });
+                          setEvent({
+                            ...event,
+                            hours: Number(event.hours) + 1,
+                          });
                         } else {
                           setEvent({ ...event, hours: 23 });
                         }
@@ -257,7 +266,10 @@ function EventsForm({ isNewEvent, event, setEvent }) {
                       className="w-4 h-4 text-gray-500 bg-transparent rounded-md flex items-center justify-center focus:outline-none"
                       onClick={() => {
                         if (event.minutes < 59) {
-                          setEvent({ ...event, minutes: event.minutes + 1 });
+                          setEvent({
+                            ...event,
+                            minutes: Number(event.minutes + 1),
+                          });
                         } else {
                           setEvent({ ...event, minutes: 59 });
                         }
@@ -351,6 +363,10 @@ function EventsForm({ isNewEvent, event, setEvent }) {
                             ...event,
                             minNumberOfInvetation:
                               event.minNumberOfInvetation + 1,
+                            maxNumberOfInvetation: Math.max(
+                              event.minNumberOfInvetation + 1,
+                              event.maxNumberOfInvetation
+                            ),
                           });
                         }
                       }}
@@ -424,6 +440,10 @@ function EventsForm({ isNewEvent, event, setEvent }) {
                           ...event,
                           maxNumberOfInvetation:
                             event.maxNumberOfInvetation - 1 || 1,
+                          minNumberOfInvetation: Math.min(
+                            event.minNumberOfInvetation,
+                            event.maxNumberOfInvetation - 1 || 1
+                          ),
                         })
                       }
                     >
@@ -469,6 +489,18 @@ function EventsForm({ isNewEvent, event, setEvent }) {
               </div>
             </div>
 
+            {/* New Google Maps Location Picker */}
+            {/* <LocationPicker /> */}
+
+            {/* Show Error on submit */}
+
+            <div
+              className="text-red-500 font-bold mt-12 text-center"
+              id="error"
+            >
+              {error}
+            </div>
+
             <div className="flex justify-center">
               <button
                 type="submit"
@@ -484,7 +516,7 @@ function EventsForm({ isNewEvent, event, setEvent }) {
         <section className="w-5/12 hidden md:flex justify-center ltr:border-l rtl: border-r border-main-color">
           <img
             src={DishImg}
-            className="w-[30rem] h-auto object-cover"
+            className="w-[32rem] h-[38rem] object-cover"
             alt="DishImg"
           />
         </section>

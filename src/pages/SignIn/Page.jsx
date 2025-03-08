@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import signinService from "../../services/authentication/signin";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import googleSignInService from "../../services/authentication/google";
 
 function SignInPage() {
   const { t } = useTranslation();
@@ -80,15 +81,7 @@ function SignInPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="input-bg w-full px-4 py-2 text-gray-900 bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                data-val="true"
-                data-val-email="The EmailAddress field is not a valid e-mail address."
-                data-val-required="This field is required."
               />
-              <span
-                className="text-red-500 text-start w-full field-validation-valid"
-                data-valmsg-for="EmailAddress"
-                data-valmsg-replace="true"
-              ></span>
             </div>
             <div className="mb-4 relative flex flex-col">
               <label htmlFor="password" className="sr-only">
@@ -103,8 +96,6 @@ function SignInPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="input-bg w-full px-4 py-2 text-gray-900 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 pe-10"
-                data-val="true"
-                data-val-required="This field is required."
               />
               <button
                 type="button"
@@ -118,11 +109,6 @@ function SignInPage() {
                   } text-sm text-white`}
                 ></i>
               </button>
-              <span
-                className="text-red-500 text-start w-full field-validation-valid"
-                data-valmsg-for="Password"
-                data-valmsg-replace="true"
-              ></span>
             </div>
             <div className="flex flex-col items-start justify-between text-sm text-white leading-relaxed">
               <a
@@ -145,7 +131,7 @@ function SignInPage() {
             >
               {t("signin.signin")}
             </button>
-            <div className="hidden text-red-500 font-bold" id="error">
+            <div className="text-red-500 font-bold" id="error">
               {error}
             </div>
           </form>
@@ -154,15 +140,17 @@ function SignInPage() {
             <span className="text-white font-medium">OR</span>
             <div className="border-t border-white flex-grow ml-3"></div>
           </div>
-          <a
+          <button
             name="provider"
             style={{ fontSize: "18px", height: "39.42px", color: "#464343" }}
             className="w-full mt-4 bg-white font-semibold py-2 rounded-lg flex items-center justify-center shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            href={`https://khaledyk-001-site4.atempurl.com/UserEvent/ExternalLogin?provider=Google&amp;fromSignin=true`}
+            // href={`https://khaledyk-001-site4.atempurl.com/UserEvent/ExternalLogin?provider=Google&amp;fromSignin=true`}
+            onClick={googleSignInService}
+            id="googleSignIn"
           >
             <img src={GoogleImg} alt="Google Icon" className="w-5 h-5 mr-2" />
             {t("signin.signinWithGoogle")}
-          </a>
+          </button>
         </div>
       </div>
     </div>

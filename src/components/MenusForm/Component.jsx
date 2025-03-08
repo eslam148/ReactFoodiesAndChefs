@@ -3,16 +3,47 @@ import DishImg2 from "../../assets/images/dish.webp";
 import { X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import checkSignIn from "../../utils/checkSignIn";
+import { addMenuService, updateMenu } from "../../services/menus/menus";
+import { useNavigate } from "react-router-dom";
 
 function MenusForm({ isNewMenu, menu, setMenu }) {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImg, setModalImg] = useState(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     checkSignIn();
   });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (menu?.courses.length === 0) {
+      setError(t("menus.errors.noCourses"));
+      return;
+    }
+
+    if (isNewMenu) {
+      const res = await addMenuService(menu);
+
+      if (res && res.success) {
+        navigate("/menus");
+      } else {
+        setError(res.data[0]);
+      }
+    } else {
+      const res = await updateMenu(menu);
+
+      if (res && res.success) {
+        navigate("/menus");
+      } else {
+        setError(res.data[0]);
+      }
+    }
+  };
 
   return (
     <div className="mainbg overflow-hidden min-h-screen">
@@ -32,7 +63,10 @@ function MenusForm({ isNewMenu, menu, setMenu }) {
             </div>
             <h3 className="uppercase text-sm">{t("menus.form.subtitle")}</h3>
           </div>
-          <div>
+
+          {/* Form For Adding Course */}
+          <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+            {/* Menu Name */}
             <div className="mb-1">
               <label className="section-title">{t("menus.form.name")}</label>
               <input
@@ -46,6 +80,8 @@ function MenusForm({ isNewMenu, menu, setMenu }) {
                 onChange={(e) => setMenu({ ...menu, name: e.target.value })}
               />
             </div>
+
+            {/* Menu Description */}
             <div className="mb-1">
               <label className="section-title">
                 {t("menus.form.description")}
@@ -63,12 +99,16 @@ function MenusForm({ isNewMenu, menu, setMenu }) {
                 }
               />
             </div>
+
             <hr className="w-full bg-main-color h-1 my-4 border-none" />
+
+            {/* Courses */}
             {menu?.courses?.map((course, index) => (
               <div key={index} className="flex flex-col gap-2 mb-4">
                 <div className="flex flex-col gap-2">
                   <label className="section-title flex flex-row justify-between pr-4">
                     {t("menus.form.course")} {index + 1}
+                    {/* Delete Button */}
                     <i
                       className="fa-solid fa-trash-can text-lg text-main-color hover:text-red-500 cursor-pointer"
                       onClick={() => {
@@ -95,22 +135,20 @@ function MenusForm({ isNewMenu, menu, setMenu }) {
                   />
                 </div>
                 <div className="relative mb-1">
-                  <div className="Interl focus:border-[#fa8836be] focus:ring-2 focus:ring-[#ecaf4a] focus:outline-none opacity-70 h-[66px] bg-[#444444] w-full">
-                    <textarea
-                      id="CourseDesc"
-                      name="CourseDesc"
-                      type="text"
-                      className="Interl focus:border-[#fa8836be] focus:ring-2 focus:ring-[#ecaf4a] focus:outline-none opacity-70 h-[66px] border border-[#FFFFFF4D] bg-[#444444] w-full p-3"
-                      placeholder={t("menus.form.courseDescriptionPlaceholder")}
-                      value={course.description}
-                      required
-                      onChange={(e) => {
-                        const newCourses = [...menu.courses];
-                        newCourses[index].description = e.target.value;
-                        setMenu({ ...menu, courses: newCourses });
-                      }}
-                    ></textarea>
-                  </div>
+                  <textarea
+                    id="CourseDesc"
+                    name="CourseDesc"
+                    type="text"
+                    className="Interl focus:border-[#fa8836be] focus:ring-2 focus:ring-[#ecaf4a] focus:outline-none opacity-90 h-[66px] bg-[#444444] w-full p-3"
+                    placeholder={t("menus.form.courseDescriptionPlaceholder")}
+                    value={course.description}
+                    required
+                    onChange={(e) => {
+                      const newCourses = [...menu.courses];
+                      newCourses[index].description = e.target.value;
+                      setMenu({ ...menu, courses: newCourses });
+                    }}
+                  ></textarea>
                   <div className="flex flex-row w-full justify-start items-center gap-4 mt-4">
                     <div>
                       <label
@@ -134,7 +172,6 @@ function MenusForm({ isNewMenu, menu, setMenu }) {
                         type="file"
                         id={`CourseImg ${index}`}
                         name={`CourseImg ${index}`}
-                        required
                         onChange={(e) => {
                           const newCourses = [...menu.courses];
                           newCourses[index].image = e.target.files[0];
@@ -152,8 +189,17 @@ function MenusForm({ isNewMenu, menu, setMenu }) {
                           course.image ? "bg-main-color" : "bg-[#444444]"
                         }`}
                         onClick={() => {
-                          setModalImg(URL.createObjectURL(course.image));
-                          setIsModalOpen(true);
+                          if (!course.image) return;
+
+                          if (typeof course.image === "string") {
+                            setModalImg(
+                              `${process.env.REACT_APP_API_URL}/${course.image}`
+                            );
+                            setIsModalOpen(true);
+                          } else {
+                            setModalImg(URL.createObjectURL(course.image));
+                            setIsModalOpen(true);
+                          }
                         }}
                       >
                         {t("menus.form.showImage")}
@@ -166,8 +212,17 @@ function MenusForm({ isNewMenu, menu, setMenu }) {
                           course.image ? "bg-main-color" : "bg-[#444444]"
                         }`}
                         onClick={() => {
-                          setModalImg(URL.createObjectURL(course.image));
-                          setIsModalOpen(true);
+                          if (!course.image) return;
+
+                          if (typeof course.image === "string") {
+                            setModalImg(
+                              `${process.env.REACT_APP_API_URL}/${course.image}`
+                            );
+                            setIsModalOpen(true);
+                          } else {
+                            setModalImg(URL.createObjectURL(course.image));
+                            setIsModalOpen(true);
+                          }
                         }}
                       >
                         <i className="fa-solid fa-image" />
@@ -189,14 +244,20 @@ function MenusForm({ isNewMenu, menu, setMenu }) {
                 {t("menus.form.addCourse")}
               </button>
             </div>
+
+            {/* Error Message */}
+            {error && (
+              <div className="text-red-500 font-bold mt-20">{error}</div>
+            )}
+
             <button
               type="submit"
               style={{ height: "40.76px" }}
-              className="w-full mt-20 text-white font-bold focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full mt-2 text-white font-bold focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              {t("menus.form.addMenu")}
+              {isNewMenu ? t("menus.form.addMenu") : t("menus.form.updateMenu")}
             </button>
-          </div>
+          </form>
           {/* Modal */}
           {isModalOpen && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -222,7 +283,7 @@ function MenusForm({ isNewMenu, menu, setMenu }) {
         <section className="w-5/12 hidden md:flex justify-end">
           <img
             src={DishImg2}
-            className="w-[30rem] h-[30rem] object-cover"
+            className="w-[32rem] h-[38rem] object-cover"
             alt="FoodImage"
           />
         </section>

@@ -2,23 +2,41 @@ import { useEffect, useState } from "react";
 import DishImg2 from "../../assets/images/dish.webp";
 import { useTranslation } from "react-i18next";
 import checkSignIn from "../../utils/checkSignIn";
+import { getAllMenusService } from "../../services/menus/menus";
+import LoadingSpinner from "../../components/Spinner/Component";
 
 function MenusPage() {
   const { t } = useTranslation();
 
   const [menus, setMenus] = useState([]);
+  const [isMenusLoading, setIsMenusLoading] = useState(false);
 
   useEffect(() => {
     checkSignIn();
   });
 
   useEffect(() => {
-    setMenus([
-      {
-        id: "b755d17d-62f0-444a-5280-08dd3a30e7f0",
-        name: "Classic Menu",
-      },
-    ]);
+    const getMenus = async () => {
+      setIsMenusLoading(true);
+
+      try {
+        const page = 1;
+        const pageSize = 5;
+        const res = await getAllMenusService(page, pageSize);
+
+        if (res && res.success) {
+          console.log(res);
+
+          setMenus(res.data.data);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+
+      setIsMenusLoading(false);
+    };
+
+    getMenus();
   }, []);
   return (
     <div className="mainbg overflow-hidden min-h-screen">
@@ -42,39 +60,51 @@ function MenusPage() {
                 {t("menus.addMenu")}
               </a>
             </div>
-            {menus.map((event) => (
-              <div
-                className="bg-main-color h-[53px] flex justify-between w-full items-center p-6 "
-                style={{ borderRadius: "16px" }}
-                key={event.id}
-              >
-                <div className="font-bold text-xl flex gap-0 md:gap-2 flex-col md:flex-row">
-                  <span className="font-bold md:text-[18px] text-[14px] mx-2">
-                    {event.name}
-                  </span>
-                  <span className="date font-bold	md:text-[18px] text-[12px]">
-                    {event.date}
-                  </span>
-                </div>
-                <div
-                  className="flex text-center justify-end gap-2 md:w-3/12"
-                  dir="auto"
-                >
-                  <a
-                    className="md:h-[35px] h-[24px] md:w-[85px] w-[44px] bg-white text-main-color p-0.5 md:p-0 my-auto  border-[3px] border-white   font-bold md:text-[18px] text-[10px]  hover:bg-[#000000]  hover:border-[3px] hover:border-[#000000] rounded-[40px]	"
-                    href={`/Home/EditEvent?eventId=${event.id}`}
+            {menus.length <= 0 ? (
+              <>
+                {isMenusLoading ? (
+                  <div className="flex justify-center items-center">
+                    <LoadingSpinner />
+                  </div>
+                ) : (
+                  <div>
+                    <h2 className="text-white md:text-4xl text-s my-20 font-bold text-center">
+                      You Don't have any menus yet.
+                    </h2>
+                  </div>
+                )}
+              </>
+            ) : (
+              <>
+                {menus.map((event) => (
+                  <div
+                    className="bg-main-color h-[53px] flex justify-between w-full items-center p-6 "
+                    style={{ borderRadius: "16px" }}
+                    key={event.id}
                   >
-                    {t("global.edit")}
-                  </a>
-                  <a
-                    className=" md:h-[35px] h-[24px] md:w-[85px] w-[44px]  bg-white text-main-color p-0.5 md:p-0 my-auto  border-[3px] border-white     font-bold md:text-[18px] text-[10px] 	 hover:bg-[#000000]   hover:border-[3px] hover:border-[#000000] rounded-[40px]"
-                    href={`/Home/ChefOffers?eventId=${event.id}`}
-                  >
-                    {t("global.show")}
-                  </a>
-                </div>
-              </div>
-            ))}
+                    <div className="font-bold text-xl flex gap-0 md:gap-2 flex-col md:flex-row">
+                      <span className="font-bold md:text-[18px] text-[14px]">
+                        {event.menuName}
+                      </span>
+                      <span className="date font-bold	md:text-[18px] text-[12px]">
+                        {event.createAt?.split("T")[0]}
+                      </span>
+                    </div>
+                    <div
+                      className="flex text-center justify-end gap-2 md:w-3/12"
+                      dir="auto"
+                    >
+                      <a
+                        className=" md:h-[35px] h-[24px] md:w-[14rem] w-[6rem]  bg-white text-main-color p-0.5 md:p-0 my-auto border-[3px] border-white font-bold md:text-[18px] text-[10px] hover:bg-[#000000] hover:border-[3px] hover:border-[#000000] rounded-[40px]"
+                        href={`/menus/edit/${event.id}`}
+                      >
+                        {t("menus.showMenu")}
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </>
+            )}
             <div className="flex justify-center mt-6 gap-2">
               <button
                 disabled
@@ -153,7 +183,7 @@ function MenusPage() {
           <section className="w-5/12 hidden md:flex justify-end ltr:border-l rtl: border-r border-main-color">
             <img
               src={DishImg2}
-              className="w-[30rem] h-auto object-cover"
+              className="w-[32rem] h-[38rem] object-cover"
               alt="FoodImage"
             />
           </section>

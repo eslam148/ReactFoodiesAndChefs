@@ -11,8 +11,8 @@ function NavbarHider() {
     "/verifyOtp",
     "/forgotPassword",
     "/forgotPassword/confirmEmail",
-    "/resetPassword"
-     
+    "/resetPassword",
+    "/MeetOurChefs"
   ];
   const hideNavbar = routesWithoutNavbar.includes(location.pathname);
 

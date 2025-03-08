@@ -1,6 +1,6 @@
 function ProfileSVG() {
   return (
-    <span class="mx-2">
+    <span className="mx-2">
       <svg
         width="22"
         height="22"

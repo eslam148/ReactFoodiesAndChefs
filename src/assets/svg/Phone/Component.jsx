@@ -1,6 +1,6 @@
 function PhoneSVG() {
   return (
-    <span class="mx-2">
+    <span className="mx-2">
       <svg
         width="20"
         height="20"

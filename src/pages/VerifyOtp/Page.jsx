@@ -8,10 +8,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 function VerifyOtpPage() {
   const { t } = useTranslation();
   const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
   const navigate = useNavigate();
 
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
-  const [email, setEmail] = useState("yasser@gmail.com");
+  const [email, setEmail] = useState(queryParams.get("email"));
   const [resetTimerLeft, setResetTimerLeft] = useState(60);
   const [isResetDisabled, setIsResetDisabled] = useState(true);
   const [error, setError] = useState("");

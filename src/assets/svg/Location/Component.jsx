@@ -1,6 +1,6 @@
 function LocationSVG() {
   return (
-    <span class="mx-2">
+    <span className="mx-2">
       <svg
         width="28"
         height="28"
