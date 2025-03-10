@@ -95,15 +95,15 @@ const AddToFavorate = () => {}
                 </div>
                 <button className="bg-main-color flex h-11 items-center justify-center ml-4 w-10" >
                 <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5.5 12.5L5.5 4.5" stroke="white" stroke-width="1.25" stroke-linecap="round"/>
-                            <path d="M19.5 20.5L19.5 18.5" stroke="white" stroke-width="1.25" stroke-linecap="round"/>
-                            <path d="M5.5 20.5L5.5 16.5" stroke="white" stroke-width="1.25" stroke-linecap="round"/>
-                            <path d="M19.5 12.5L19.5 4.5" stroke="white" stroke-width="1.25" stroke-linecap="round"/>
-                            <path d="M12.5 7.5L12.5 4.5" stroke="white" stroke-width="1.25" stroke-linecap="round"/>
-                            <path d="M12.5 20.5L12.5 12.5" stroke="white" stroke-width="1.25" stroke-linecap="round"/>
-                            <circle cx="5.5" cy="14.5" r="2" stroke="white" stroke-width="1.25" stroke-linecap="round"/>
-                            <circle cx="12.5" cy="9.5" r="2" stroke="white" stroke-width="1.25" stroke-linecap="round"/>
-                            <circle cx="19.5" cy="15.5" r="2" stroke="white" stroke-width="1.25" stroke-linecap="round"/>
+                            <path d="M5.5 12.5L5.5 4.5" stroke="white" strokeWidth="1.25" strokeLinecap="round"/>
+                            <path d="M19.5 20.5L19.5 18.5" stroke="white" strokeWidth="1.25" strokeLinecap="round"/>
+                            <path d="M5.5 20.5L5.5 16.5" stroke="white" strokeWidth="1.25" strokeLinecap="round"/>
+                            <path d="M19.5 12.5L19.5 4.5" stroke="white" strokeWidth="1.25" strokeLinecap="round"/>
+                            <path d="M12.5 7.5L12.5 4.5" stroke="white" strokeWidth="1.25" strokeLinecap="round"/>
+                            <path d="M12.5 20.5L12.5 12.5" stroke="white" strokeWidth="1.25" strokeLinecap="round"/>
+                            <circle cx="5.5" cy="14.5" r="2" stroke="white" strokeWidth="1.25" strokeLinecap="round"/>
+                            <circle cx="12.5" cy="9.5" r="2" stroke="white" strokeWidth="1.25" strokeLinecap="round"/>
+                            <circle cx="19.5" cy="15.5" r="2" stroke="white" strokeWidth="1.25" strokeLinecap="round"/>
                             </svg>
 
                 </button>

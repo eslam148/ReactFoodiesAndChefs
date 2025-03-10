@@ -11,7 +11,8 @@ module.exports = {
       },
       colors: {
         'main-color': 'rgb(250 136 54)',
-        'main-dark-color': '#CF5600'
+        'main-dark-color': '#CF5600',
+        'main-green-color': '#128000',
         
       },
       clipPath: {

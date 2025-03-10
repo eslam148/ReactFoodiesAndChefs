@@ -89,3 +89,52 @@ export const updateEventService = async (event) => {
         console.log(err);
     }
 }
+
+
+export const SetMySelf = async (menuId, eventId) => {
+    try {
+        const token = localStorage.getItem("token");
+
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/Home/SetMySelfChef?menuId=${menuId}&eventId=${eventId}`, {
+            method: "GET",  // Change to GET
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            },
+        });
+
+        const data = await res.json();
+        console.log(data);
+
+        return data;
+    } catch (err) {
+        console.log("Failed to send request:", err);
+    }
+};
+
+export const AddHostprice = async (event) => {
+    try {
+        const token = localStorage.getItem("token")
+
+        console.log(event);
+
+
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/Home/AddHostPrice`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+            body: JSON.stringify(event),
+        })
+
+        const data = await res.json();
+
+        console.log(data);
+
+        return data;
+
+    } catch (err) {
+        console.log("Failed to update event");
+        console.log(err);
+    }
+}

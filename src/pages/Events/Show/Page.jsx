@@ -1,70 +1,62 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import FacebookImg from "../../../assets/images/facebook.svg";
-import InstagramImg from "../../../assets/images/instagram.svg";
-import XImg from "../../../assets/images/X.svg";
-import DisFacebookImg from "../../../assets/images/DisFaceBook.svg";
-import DisInstagramImg from "../../../assets/images/DisInstagram.svg";
-import DisXImg from "../../../assets/images/DisX.svg";
+ 
 import "./styles.css";
-import { getEventByEventIdService } from "../../../services/events/events";
+import { getEventByEventIdService,SetMySelf ,AddHostprice} from "../../../services/events/events";
 import checkSignIn from "../../../utils/checkSignIn";
+import { GetChefsService } from "../../../services/Chef/Chef";
+import ChefList from "../../../components/ChefList/Component";
+import ChefOfferTable from "../../../components/Table/ChefOffersTable";
+import InvitationTable from "../../../components/Table/invitationTable";
+import { getMyMenu } from "../../../services/menus/menus";
 
 function ShowEventPage() {
   const { eventId } = useParams();
   const [event, setEvent] = useState({});
   const [chefs, setChefs] = useState([]);
-
+  const[invitation,setInvitation]=useState([]);
+  const [chefOffers,setChefOffers]=useState([]);
   const [copied, setCopied] = useState(false);
+  const [myMenu, setMyMenu] = useState([]);
+  const [isFree, setIsFree] = useState(false);
 
+  const updateEvent = async (eventId) => {
+    const res = await getEventByEventIdService(eventId);
+
+    if (res && res.success) {
+    
+
+      setEvent(res.data);
+      console.log(res.data,event);
+    }
+  };
   useEffect(() => {
     checkSignIn();
   });
-
   useEffect(() => {
-    setChefs([
-      {
-        id: 1,
-        name: "Yasser Emam",
-        country: "Egypt",
-        city: "Cairo",
-        socialLinks: {
-          facebook: "https://www.facebook.com/",
-          instagram: "https://www.instagram.com/",
-        },
-      },
-      {
-        id: 2,
-        name: "Magdy Salem",
-        country: "Egypt",
-        city: "Cairo",
-        socialLinks: {
-          facebook: "https://www.facebook.com/",
-          X: "https://www.instagram.com/",
-        },
-      },
-      {
-        id: 3,
-        name: "Ali Khaled",
-        country: "Egypt",
-        city: "Cairo",
-        socialLinks: {
-          instagram: "https://www.facebook.com/",
-          X: "https://www.instagram.com/",
-        },
-      },
-    ]);
+    const getMeue = async () => {
+      const res = await getMyMenu();
+      console.log(res.data);
+      setMyMenu(res.data);
+      
+    }
+    getMeue();
+  },[])
+  useEffect(() => {
+    const getChefs = async () => {
+      const res = await GetChefsService();
+      
+      console.log(res.data);
 
-    const updateEvent = async (eventId) => {
-      const res = await getEventByEventIdService(eventId);
 
-      if (res && res.success) {
-        console.log(res);
+        setChefs(res.data);
+      
+    }
+    getChefs();
+   
 
-        setEvent(res.data);
-      }
-    };
+     
 
     updateEvent(eventId);
   }, []);
@@ -85,380 +77,331 @@ function ShowEventPage() {
       console.error("Failed to copy: ", err);
     }
   };
+  const AddPrice = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target); // Get form data
+    const price = isFree ? 0 : formData.get("price"); // If free, set price to 0
+    const currency = isFree ? "" : formData.get("HostCurrancy"); // If free, remove currency
 
-  const handleSendInviteToChef = () => {
-    console.log("Send Invite to Chef");
+  const data = {
+    price,
+    currency,
+    id: eventId,
   };
 
+  console.log("Submitting:", data);
+  AddHostprice(data) .then(response => {
+     event.price = data.price;
+  })
+  .catch(error => console.error("Error setting self as chef:", error));
+  
+  }
+
+  const useMyMenu = (e) => {
+    e.preventDefault();  
+    const formData = new FormData(e.target); 
+    const formValues = Object.fromEntries(formData.entries());
+
+    const { MenuId, EventId } = formValues;
+
+    if (!MenuId || !EventId) {
+       
+        return;
+    }
+    
+
+   ;
+    // Call SetMySelf with extracted values
+    SetMySelf(MenuId, EventId)
+        .then(response => {
+          updateEvent(eventId)
+        })
+        .catch(error => console.error("Error setting self as chef:", error));
+  };
+  
   return (
     <main
       className="min-h-[80dvh] md:flex md:gap-10 mt-0 p-0 "
       id="main-show-event"
     >
       <section className="min-h-screen  md:space-y-14 space-y-5 md:min-h-full flex flex-col w-full items-center p-3 md:p-5 z-10 text-start lato-bold md:pl-10 plus-jakarta-sans">
-        <div className="bg-[#D9D9D926] md:w-12/12 w-full flex flex-col plus-jakarta-sans text-[13px] md:text-[23px] p-3 py-6 space-y-5 border border-main-color rounded-[5px]">
-          <div className="flex">
-            <span className="md:w-2/12  w-7/12">Event name: </span>
-            <span className="w-10/12">{event?.eventName}</span>
-          </div>
-          <div className="flex">
-            <span className="md:w-2/12 w-7/12">Description: </span>
-            <span className="w-10/12">{event?.eventDescription}</span>
-          </div>
-          <div className="flex">
-            <span className="md:w-2/12  w-7/12">Time:</span>
-            {event?.date && (
-              <span className="w-10/12 tracking-wide" id="duration-output">
-                This event will take place on{" "}
-                <span className="text-main-color">
-                  {event.date?.split("T")[0]}
-                </span>
-                <br /> From{" "}
-                <span className="text-main-color">
-                  {event.startTime?.split("T")[1]?.substring(0, 5)}{" "}
-                </span>
-                <br />
-                until{" "}
-                <span className="text-main-color">
-                  {event.endTime?.split("T")[1]?.substring(0, 5)}
-                </span>
-              </span>
-            )}
-          </div>
-          <div className="flex">
-            <span className="md:w-2/12  w-7/12">Number of guests:</span>
-            {event?.minNumberOfInvetation && (
-              <span className="w-10/12">{`${event?.minNumberOfInvetation} to ${event?.maxNumberOfInvetation} Guests`}</span>
-            )}
-          </div>
-          <div className="flex">
-            <span className="md:w-2/12  w-7/12">Location: </span>
-            <span className="w-10/12">{event?.generalLocation}</span>
-          </div>
-          {/* <div className="flex">
-            <span className="md:w-2/12  w-7/12">
-              Number of seats remaining:
-            </span>
-            <span className="w-10/12  m-auto">{event?.seatsRemaining}</span>
-          </div> */}
+      <div className="bg-[#000001] md:w-12/12 w-full flex flex-col plus-jakarta-sans text-[13px] md:text-[23px] p-8 space-y-5 rounded-[5px]">
+      <h2 className="text-center font-bold text-white text-[25px]"> {event?.eventName}</h2>
+
+      <div className="flex text-main-color text-[28px] font-semibold">
+        Event details
+      </div>
+
+      <div className="flex items-center gap-2 text-white">
+        <svg width="27" height="28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13.6496 24.8967C19.6886 24.8967 24.5842 20.0011 24.5842 13.962C24.5842 7.92296 19.6886 3.02734 13.6496 3.02734C7.61051 3.02734 2.71489 7.92296 2.71489 13.962C2.71489 20.0011 7.61051 24.8967 13.6496 24.8967Z" stroke="white" strokeWidth="1.87451" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M13.6493 9.58789V13.9618" stroke="white" strokeWidth="1.87451" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M13.6493 18.3359H13.661" stroke="white" strokeWidth="1.87451" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+        <span>{event?.eventDescription}</span>
+      </div>
+
+      <div className="flex items-center gap-2 text-white">
+      <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g clipPath="url(#clip0_10731_17267)">
+          <path d="M23.491 11.39C23.491 19.0443 13.6498 25.6051 13.6498 25.6051C13.6498 25.6051 3.80861 19.0443 3.80861 11.39C3.80861 8.77998 4.84545 6.27683 6.69103 4.43125C8.53661 2.58567 11.0398 1.54883 13.6498 1.54883C16.2599 1.54883 18.763 2.58567 20.6086 4.43125C22.4542 6.27683 23.491 8.77998 23.491 11.39Z" stroke="white" strokeWidth="1.87451" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M13.6496 14.6702C15.4613 14.6702 16.93 13.2015 16.93 11.3898C16.93 9.57806 15.4613 8.10938 13.6496 8.10938C11.8378 8.10938 10.3692 9.57806 10.3692 11.3898C10.3692 13.2015 11.8378 14.6702 13.6496 14.6702Z" stroke="white" strokeWidth="1.87451" strokeLinecap="round" strokeLinejoin="round"/>
+          </g>
+          <defs>
+          <clipPath id="clip0_10731_17267">
+          <rect width="26.2432" height="26.2432" fill="white" transform="translate(0.527878 0.455078)"/>
+          </clipPath>
+          </defs>
+        </svg>
+
+        <span>{event?.generalLocation}</span>
+      </div>
+
+      <div className="flex items-center gap-2 text-white">
+      <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M22.3973 23.4085V21.2215C22.3973 20.0615 21.9365 18.949 21.1162 18.1287C20.296 17.3085 19.1834 16.8477 18.0234 16.8477H9.27569C8.11567 16.8477 7.00316 17.3085 6.1829 18.1287C5.36264 18.949 4.90182 20.0615 4.90182 21.2215V23.4085" stroke="white" strokeWidth="1.87451" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M13.6493 12.4743C16.0649 12.4743 18.0232 10.516 18.0232 8.10043C18.0232 5.68481 16.0649 3.72656 13.6493 3.72656C11.2337 3.72656 9.27544 5.68481 9.27544 8.10043C9.27544 10.516 11.2337 12.4743 13.6493 12.4743Z" stroke="white" strokeWidth="1.87451" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+ 
+        <span>{event?.minNumberOfInvetation} to {event?.maxNumberOfInvetation} Guests</span>
+      </div>
+
+      <div className="flex items-center gap-2 text-white">
+      <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M21.304 4.43555H5.99547C4.78766 4.43555 3.80853 5.41467 3.80853 6.62248V21.931C3.80853 23.1388 4.78766 24.118 5.99547 24.118H21.304C22.5118 24.118 23.4909 23.1388 23.4909 21.931V6.62248C23.4909 5.41467 22.5118 4.43555 21.304 4.43555Z" stroke="white" strokeWidth="1.87451" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M18.0236 2.25V6.62387" stroke="white" strokeWidth="1.87451" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M9.27536 2.25V6.62387" stroke="white" strokeWidth="1.87451" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M3.80853 10.998H23.4909" stroke="white" strokeWidth="1.87451" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+
+        <span className="tracking-wide">
+          This event will take place on
+          <span className="text-main-color ml-1">
+            {event.date?.split("T")[0]}
+          </span>
+        </span>
+      </div>
+
+      <div className="flex items-center gap-2 text-white p-2">
+        <svg width="27" height="27" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13.6495 24.299C19.6885 24.299 24.5841 19.4034 24.5841 13.3644C24.5841 7.3253 19.6885 2.42969 13.6495 2.42969C7.61043 2.42969 2.71481 7.3253 2.71481 13.3644C2.71481 19.4034 7.61043 24.299 13.6495 24.299Z" stroke="white" strokeWidth="1.87451" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M13.6492 6.80273V13.3635L18.0231 15.5505" stroke="white" strokeWidth="1.87451" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+        <span>
+        {" "} From{" "} <span className="text-main-color">{event.startTime?.split("T")[1]?.substring(0, 5)} PM</span>
+          {" "} until{" "} <span className="text-main-color">{event.endTime?.split("T")[1]?.substring(0, 5)} PM</span>
+        </span>
+      </div>
+  </div>
+    <div className="w-full border-2 border-main-color p-5 rounded-[5px] font-bold flex flex-col">
+        <p className="plus-jakarta-sans text-[15px] md:text-[26px] text-center w-full font-bold">
+             Options for choosing chef
+        </p>
+
+        <div className="flex flex-col md:flex-row gap-5 md:gap-10 mt-5">
+            <div className="flex flex-col items-center justify-between w-full md:w-4/12">
+                  <i className="fa-solid fa-check text-main-color text-[40px]"></i>
+                  <p className="plus-jakarta-sans text-[15px] md:text-[26px] text-center w-full font-bold">
+                    Send a culinary request to our chefs
+                  </p>
+            </div>
+            <div className="flex flex-col items-center justify-between w-full md:w-4/12">
+                  <i className="fa-solid fa-check text-main-color text-[40px]"></i>
+                  <p className="plus-jakarta-sans text-[15px] md:text-[26px] text-center w-full font-bold">
+                  Invite chefs who are not listed
+                  </p>
+            </div>
+            <div className="flex flex-col items-center justify-between w-full md:w-4/12 ">
+                  <i className="fa-solid fa-check text-main-color text-[40px]"></i>
+                  <p className="plus-jakarta-sans text-[15px] md:text-[26px] text-center w-full font-bold">
+                      As a skilled chef, you may add one of your own menus to this event
+                  </p>
+            </div>
         </div>
+    </div>
+    {event.chef ? (
+  <div className="w-full bg-[#D9D9D926] flex flex-col md:flex-row justify-between items-center text-xs md:text-3xl p-6 md:p-10 font-bold border-2 border-main-color rounded-xl">
+    {/* Left Section - Text Content */}
+    <div className="flex flex-col items-center text-center md:items-start md:text-left w-full md:w-1/2 space-y-10">
+      <h2 className="text-xl md:text-3xl text-main-color">
+        Chef {event.chef?.firstName} {event.chef?.lastName}
+      </h2>
+      <p className="text-sm md:text-lg text-white">
+        {console.log(event.chef?.description)}
+       </p>
+      {/* Buttons */}
+      <div className="flex gap-4 justify-center w-full">
+        <button className="bg-main-color text-white text-sm px-4 py-2 rounded-xl hover:bg-orange-600 transition w-1/3">
+          Menu
+        </button>
+        <button className="bg-main-green-color text-white text-sm px-4 py-2 rounded-xl hover:bg-orange-600 transition w-1/3">
+          Chat Now
+        </button>
+      </div>
+    </div>
 
-        <p className="plus-jakarta-sans text-[15px] md:text-[26px]    md:pb-4 md:w-1/2 w-full">
-          To create a culinary menu for your event, choose one or more of the
-          following options:
-        </p>
-        <ul className="plus-jakarta-sans text-[15px] md:text-[26px] border-b border-main-color pb-5 w-full">
-          <li className="my-3">
-            1- Send a culinary request for proposal to one or more of our
-            renowned chefs
-          </li>
-          <li className="my-3">
-            2- Share a culinary request for proposal through a link with chefs
-            who are not on our list.
-          </li>
-          <li className="my-3">
-            3- As a skilled chef, you may add one of your own menus to this
-            event
-          </li>
-        </ul>
-        <p className="plus-jakarta-sans text-[15px] md:text-[26px]  w-full text-start">
-          1- Request an offer from our renowned chefs.
-        </p>
-        <div className="w-full">
-          <table className="w-full rounded-[5px] overflow-hidden">
-            <thead className="bg-[#D89D7240]  rounded-t-[5px]">
-              <tr className="grid md:grid-cols-5 grid-cols-5 gap-2 md:gap-1 my-5 text-center">
-                <th className="md:text-[22px] text-[0.5rem] w-full mx-3 md:text-start text-start">
-                  Chef&#x2019;s Name
-                </th>
+    {/* Right Section - Image */}
+    <div className="w-full md:w-1/2 flex justify-center p-5">
+      <img
+        src={process.env.REACT_APP_API_URL+"/"+event.chef?.profileImageLink}
+        alt="Italian Delight"
+        className="object-cover rounded-2xl border-2 border-main-color w-full md:w-[300px]"
+      />
+    </div>
+  </div>
+) : (
+  
+  <div>
+    <ChefList></ChefList>
+    {/* Copy link Table */}
+    <p className="plus-jakarta-sans text-[15px] md:text-[26px] border-t border-main-color w-full text-start pt-5 font-bold">
+      Invite your favorite chef to submit their offer via this link
+    </p>
+    <div className="relative w-full flex justify-center items-center">
+      <div className="border-2 border-[#FA883669] text-center p-0.5 bg-[#73737354] w-full lg:w-3/4 lg:h-16 h-[38px] rounded-[30px] flex justify-between items-center">
+        <button
+          className="md:mx-7 mx-2 mb-1 md:mb-0 bg-transparent"
+          onClick={handleCopyClick}
+        >
+          <i className="fa-solid fa-link text-[#C9CED6] md:text-[20px] text-[10px]"></i>
+        </button>
 
-                <th className="md:text-xl text-[0.5rem]">Country &amp; City</th>
+        <span className="hidden" id="linkToCopy">
+          {`You have been invited to submit a culinary proposal for an exclusive venue. Please share your offer via this link:
+          ${process.env.REACT_APP_API_URL}/Chef/OrderPage/d11453f6-3629-49b8-8bc7-08dd3fb439ca`}
+        </span>
 
-                <th className="md:text-xl text-[0.5rem] col-span-2 md:col-span-1">
-                  Social links
-                </th>
-                <th className="md:text-xl text-[0.5rem]">Send Invite</th>
-                <th className="md:text-xl text-[0.5rem]">Favorite</th>
-              </tr>
-            </thead>
-            <tbody className="bg-[#D9D9D926]">
-              {chefs.map((chef, ind) => (
-                <tr
-                  key={ind}
-                  className="grid md:grid-cols-5 grid-cols-6 gap-2 md:gap-2 my-5 text-center"
-                >
-                  <td className="text-start md:text-start md:text-[22px] mx-3 font-semibold text-[0.5rem] w-full">
-                    <a href={`/chef/${chef.id}`} className="text-main-color">
-                      {chef.name}
-                    </a>
-                  </td>
-                  <td className="md:text-[22px] text-[0.5rem] font-semibold text-center ">
-                    {`${chef.country}, ${chef.city}`}
-                  </td>
+        <span className="lg:py-8 py-0 lg:h-[85px] h-[27px] md:text-[15px] text-[9px] text-[#CFCFCF] font-bold">
+          Invite your favorite chefs to submit their culinary proposals
+          through this link.
+        </span>
+        <button
+          id="copyLinkButton"
+          className="lg:h-[57px] h-[34px] w-[90px] md:w-[164px] bg-main-color text-white lg:p-2 p-0 lg:text-sm text-[0.5rem] font-bold hover:bg-main-dark-color border-[3px] border-main-color drop-shadow-md shadow-main-color hover:bg-transparent hover:border-[3px] hover:border-main-color hover:text-main-color rounded-[40px]"
+          onClick={handleCopyClick}
+        >
+          {copied ? "Link Copied" : "Copy Link"}
+        </button>
+      </div>
+    </div>
 
-                  <td className="md:text-[22px] text-[0.5rem] font-semibold col-span-2 md:col-span-1">
-                    <div className="flex rounded-[10px]  p-1 md:p-3 px-2 justify-center items-center w-9/12 m-auto border border-[#949494] bg-[#222222]">
-                      {chef.socialLinks.facebook ? (
-                        <a href={chef.socialLinks.facebook}>
-                          <img
-                            className="w-1/2 m-auto"
-                            src={FacebookImg}
-                            alt="Facebook"
-                          />
-                        </a>
-                      ) : (
-                        <div>
-                          <img
-                            className="w-1/2 m-auto"
-                            src={DisFacebookImg}
-                            alt="Facebook"
-                          />
-                        </div>
-                      )}
-
-                      {chef.socialLinks.instagram ? (
-                        <a href={chef.socialLinks.instagram}>
-                          <img
-                            className="w-1/2 m-auto"
-                            src={InstagramImg}
-                            alt="Instagram"
-                          />
-                        </a>
-                      ) : (
-                        <div>
-                          <img
-                            className="w-1/2 m-auto"
-                            src={DisInstagramImg}
-                            alt="Instagram"
-                          />
-                        </div>
-                      )}
-
-                      {chef.socialLinks.X ? (
-                        <a href={chef.socialLinks.X}>
-                          <img className="w-1/2 m-auto" src={XImg} alt="X" />
-                        </a>
-                      ) : (
-                        <div>
-                          <img className="w-1/2 m-auto" src={DisXImg} alt="X" />
-                        </div>
-                      )}
-                    </div>
-                  </td>
-
-                  <td className="flex justify-end md:justify-center ">
-                    <button
-                      className="block text-white bg-[#6555FF] w-[45px] md:w-[113px] h-[16px] md:h-[36px] md:text-xl text-[0.5rem] text-center font-medium rounded-[15px] border-[3px] border-[#6555FF] drop-shadow-md shadow-[#6555FF]"
-                      onClick={handleSendInviteToChef}
-                    >
-                      Send
-                    </button>
-                  </td>
-                  <td
-                    className="flex justify-center cursor-pointer"
-                    onClick={handleFavoriteClick}
-                  >
-                    <i
-                      id="fav-Icone"
-                      className={`text-main-color fa-heart md:text-3xl ${
-                        chef.isFavorite ? "fas" : "far"
-                      }`}
-                    ></i>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-
-            <tfoot className="bg-[#D9D9D926] rounded-b-[5px]">
-              <tr>
-                <td colSpan="7">
-                  <div className="flex justify-center mt-6 gap-2   p-2 rounded-b-md">
-                    <button
-                      disabled
-                      className="bg-white text-black font-semibold text-[10px] md:text-[16px] pt-1.5 md:pt-1  px-2  md:px-3 py-1 rounded-md"
-                    >
-                      <svg
-                        className="rtl:block ltr:hidden"
-                        width="8"
-                        height="13"
-                        viewBox="0 0 8 13"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M7.72747 7.19041L2.46094 12.7137C2.09693 13.0954 1.50832 13.0954 1.14818 12.7137L0.273008 11.7958C-0.0910026 11.4141 -0.0910026 10.7968 0.273008 10.4191L4.00605 6.50406L0.273008 2.58903C-0.0910026 2.20728 -0.0910026 1.58997 0.273008 1.21228L1.14431 0.286317C1.50832 -0.0954389 2.09693 -0.0954389 2.45707 0.286317L7.7236 5.80959C8.09148 6.19135 8.09148 6.80865 7.72747 7.19041Z"
-                          fill="black"
-                        />
-                      </svg>
-
-                      <svg
-                        className="ltr:block rtl:hidden"
-                        width="8"
-                        height="13"
-                        viewBox="0 0 8 13"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M0.272394 5.80959L5.53638 0.286317C5.90021 -0.0954389 6.48854 -0.0954389 6.8485 0.286317L7.72325 1.20415C8.08709 1.58591 8.08709 2.20322 7.72325 2.58091L3.99589 6.5L7.72712 10.415C8.09096 10.7968 8.09096 11.4141 7.72712 11.7918L6.85237 12.7137C6.48854 13.0954 5.90021 13.0954 5.54025 12.7137L0.276264 7.19041C-0.0914405 6.80865 -0.0914404 6.19135 0.272394 5.80959Z"
-                          fill="black"
-                        />
-                      </svg>
-                    </button>
-
-                    <a
-                      className="bg-orange-500 text-white font-semibold text-[10px] md:text-[16px] pt-2 md:pt-1  px-2  md:px-3 py-1 rounded-md"
-                      href="/Home/ChefOffers?eventId=d11453f6-3629-49b8-8bc7-08dd3fb439ca&amp;pagechef=1"
-                    >
-                      1
-                    </a>
-                    <a
-                      className="bg-white text-black font-semibold text-[10px] md:text-[16px] pt-1.5 md:pt-1  px-2  md:px-3 py-1 rounded-md"
-                      href="/Home/ChefOffers?eventId=d11453f6-3629-49b8-8bc7-08dd3fb439ca&amp;pagechef=2"
-                    >
-                      2
-                    </a>
-                    <a
-                      className="bg-white text-black font-semibold text-[10px] md:text-[16px] pt-1.5 md:pt-1  px-2  md:px-3 py-1 rounded-md"
-                      href="/Home/ChefOffers?eventId=d11453f6-3629-49b8-8bc7-08dd3fb439ca&amp;pagechef=3"
-                    >
-                      3
-                    </a>
-                    <a
-                      className="bg-white text-black font-semibold text-[10px] md:text-[16px] pt-1.5 md:pt-1  px-2  md:px-3 py-1 rounded-md"
-                      href="/Home/ChefOffers?eventId=d11453f6-3629-49b8-8bc7-08dd3fb439ca&amp;pagechef=4"
-                    >
-                      4
-                    </a>
-                    <button
-                      disabled
-                      className="bg-white text-black font-semibold text-[10px] md:text-[16px] pt-1.5 md:pt-1  px-2  md:px-3 py-1 rounded-md"
-                    >
-                      ...
-                    </button>
-                    <a
-                      className="bg-white text-black font-semibold text-[10px] md:text-[16px] pt-1.5 md:pt-1  px-2  md:px-3 py-1 rounded-md"
-                      href="/Home/ChefOffers?eventId=d11453f6-3629-49b8-8bc7-08dd3fb439ca&amp;pagechef=6"
-                    >
-                      6
-                    </a>
-
-                    <a
-                      className="bg-white text-black font-semibold text-[10px] md:text-[16px] pt-1.5 md:pt-2  px-2  md:px-3 py-1 rounded-md"
-                      href="/Home/ChefOffers?eventId=d11453f6-3629-49b8-8bc7-08dd3fb439ca&amp;pagechef=2"
-                    >
-                      <svg
-                        className="ltr:block rtl:hidden"
-                        width="8"
-                        height="13"
-                        viewBox="0 0 8 13"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M7.72747 7.19041L2.46094 12.7137C2.09693 13.0954 1.50832 13.0954 1.14818 12.7137L0.273008 11.7958C-0.0910026 11.4141 -0.0910026 10.7968 0.273008 10.4191L4.00605 6.50406L0.273008 2.58903C-0.0910026 2.20728 -0.0910026 1.58997 0.273008 1.21228L1.14431 0.286317C1.50832 -0.0954389 2.09693 -0.0954389 2.45707 0.286317L7.7236 5.80959C8.09148 6.19135 8.09148 6.80865 7.72747 7.19041Z"
-                          fill="black"
-                        />
-                      </svg>
-
-                      <svg
-                        className="rtl:block ltr:hidden"
-                        width="8"
-                        height="13"
-                        viewBox="0 0 8 13"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M0.272394 5.80959L5.53638 0.286317C5.90021 -0.0954389 6.48854 -0.0954389 6.8485 0.286317L7.72325 1.20415C8.08709 1.58591 8.08709 2.20322 7.72325 2.58091L3.99589 6.5L7.72712 10.415C8.09096 10.7968 8.09096 11.4141 7.72712 11.7918L6.85237 12.7137C6.48854 13.0954 5.90021 13.0954 5.54025 12.7137L0.276264 7.19041C-0.0914405 6.80865 -0.0914404 6.19135 0.272394 5.80959Z"
-                          fill="black"
-                        />
-                      </svg>
-                    </a>
-                  </div>
-                </td>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-        {/* copy link Table */}
-        <p className="plus-jakarta-sans text-[15px] md:text-[26px] border-t border-main-color w-full text-start pt-5 font-bold">
-          2-Invite your favorite chef to submit their offer via this link
-        </p>
-        <div className="relative w-full flex justify-center items-center ">
-          <div className="border-2 border-[#FA883669] text-center p-0.5 bg-[#73737354] w-full lg:w-3/4 lg:h-16 h-[38px] rounded-[30px] flex justify-between items-center">
-            <button
-              className="md:mx-7 mx-2 mb-1 md:mb-0 bg-transparent"
-              onClick={handleCopyClick}
-            >
-              <i className="fa-solid fa-link text-[#C9CED6] md:text-[20px] text-[10px]"></i>
-            </button>
-            <span className="hidden" id="linkToCopy">
-              {`You have been invited to submit a culinary proposal for an
-              exclusive venue. Please share your offer via this link:
-              ${process.env.REACT_APP_API_URL}/Chef/OrderPage/d11453f6-3629-49b8-8bc7-08dd3fb439ca`}
-            </span>
-
-            <span
-              className="lg:py-8 py-0 lg:h-[85px] h-[27px] md:text-[15px] text-[9px] text-[#CFCFCF] font-bold"
-              asp-controller="Chef"
-              asp-action="OrderPage"
-              asp-route-id="d11453f6-3629-49b8-8bc7-08dd3fb439ca"
-            >
-              Invite your favorite chefs to submit their culinary proposals
-              through this link.
-            </span>
-            <button
-              id="copyLinkButton"
-              className="lg:h-[57px] h-[34px] w-[90px] md:w-[164px]  bg-main-color text-white lg:p-2 p-0 lg:text-sm text-[0.5rem] font-bold hover:bg-main-dark-color border-[3px] border-main-color drop-shadow-md shadow-main-color hover:bg-transparent  hover:border-[3px] hover:border-main-color hover:text-main-color rounded-[40px]"
-              onClick={handleCopyClick}
-            >
-              {copied ? "Link Copied" : "Copy Link"}
-            </button>
-          </div>
-        </div>
-        <p className="plus-jakarta-sans text-[15px] md:text-[26px] border-t border-main-color pt-5 w-full font-bold">
-          3- Showcase your talent by adding your own menu.
-        </p>
-        <form className="flex flex-col items-center justify-center w-full space-x-5 border-b border-main-color pb-5">
-          <input
-            type="hidden"
-            name="EventId"
-            value="d11453f6-3629-49b8-8bc7-08dd3fb439ca"
-          />
-          <div className="flex  items-center justify-center w-full space-x-5 ">
-            <label htmlFor="Menu" className="text-[0.7rem] md:text-2xl">
-              Menu
-            </label>
-            <select
-              id="Menu"
-              name="MenuId"
-              className="text-xs	 md:text-xl appearance-none  md:w-5/12 w-2/3 px-4 py-2 rounded-[15px] text-white opacity-70 h-[39px] md:h-[48px]    border border-main-color  bg-[#444444] form-control    p-3   focus:border-[#fa8836be] focus:ring-2 focus:ring-[#ecaf4a] focus:outline-none"
-            >
-              <option
-                value="b755d17d-62f0-444a-5280-08dd3a30e7f0"
-                className=" checked:bg-orange-100 bg-white text-black "
-              >
-                Menu Name
+    {/* Form to submit menu */}
+    <p className="plus-jakarta-sans text-[15px] md:text-[26px] border-t border-main-color pt-5 w-full font-bold">
+      3- Showcase your talent by adding your own menu.
+    </p>
+    <form className="flex flex-col items-center justify-center w-full space-x-5 border-b border-main-color pb-5" onSubmit={useMyMenu}>
+      <input type="hidden" name="EventId" value={event.eventId} />
+      <div className="flex items-center justify-center w-full space-x-5">
+        <label htmlFor="Menu" className="text-[0.7rem] md:text-2xl">
+          Menu
+        </label>
+        <select
+          id="Menu"
+          name="MenuId"
+          className="text-xs md:text-xl appearance-none md:w-5/12 w-2/3 px-4 py-2 rounded-[15px] text-white opacity-70 h-[39px] md:h-[48px] border border-main-color bg-[#444444] form-control p-3 focus:border-[#fa8836be] focus:ring-2 focus:ring-[#ecaf4a] focus:outline-none"
+        >
+          {myMenu.length > 0 ? (
+            myMenu.map((menu, index) => (
+              <option key={index} value={menu.id} className="bg-white text-black">
+                {menu.menuName}
               </option>
-            </select>
+            ))
+          ) : (
+            <option disabled>No menus available</option>
+          )}
+        </select>
+      </div>
+      <div className="plus-jakarta-sans text-[12px] md:text-[20px] w-full text-start pt-5 font-bold">
+        Please note:
+        <br />
+        Adding your own menu will override options 1 and 2.
+      </div>
+      <div className="flex justify-center">
+        <button
+          type="submit"
+          className="bg-[#6555FF] rounded-[15px] md:text-[30px] w-[273px] md:w-[390px] h-[42px] md:h-[60px] mt-4 drop-shadow-md shadow-[#7163FF59] hover:bg-transparent hover:border-4 hover:border-[#4136A3] hover:text-[#4136A3]"
+        >
+          Use My Menu
+        </button>
+      </div>
+    </form>
+  </div>
+)}
+
+
+{!event.price && event.price !== 0 ? (
+      <form method ="post" onSubmit={AddPrice}  asp-action="AddPrice" class="bg-[#D9D9D926]   w-full  flex flex-col plus-jakarta-sans p-3 md:p-10 py-6 space-y-12 border border-[#FA8836] rounded-[5px]">
+      <div class="flex justify-around w-full space-y-10 md:space-y-0">
+
+          <div class="flex md:flex-row flex-col  justify-between md:items-start items-center space-y-5 md:space-y-0 md:w-2/3">
+
+              <label for="price" class="text-white font-semibold text-[15px] md:text-[27px] ">SharedCostGuest</label>
+              <div class="flex items-center   justify-center md:w-6/12 w-full">
+                
+
+                  
+                  <input disabled={isFree}  name="price" id="Price" type="number" min="1" class="   w-1/2 bg-[#D9D9D954] text-white border border-[#C0C0C0] rounded-none h-[35px] md:h-[34px] p-2 md:text-[15px] text-[10px]    focus:outline-none focus:ring-2 focus:ring-orange-500"/>
+                  
+                  <select  disabled={isFree} name="HostCurrancy" id="currancy" class="md:w-1/2  focus:text-black bg-[#D9D9D954] border border-[#C0C0C0] ltr:border-l-0 rtl:border-r-0  text-white h-[35px] md:h-[34px] md:text-[15px] text-[10px]       p-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                      
+                    
+                  </select>
+              </div>
           </div>
-          <div className="plus-jakarta-sans text-[12px] md:text-[20px] w-full text-start pt-5 font-bold">
-            Please note:
-            <br />
-            Adding your own menu will override options 1 and 2.
+        
+        
+          <div class="flex items-center justify-center gap-2 mr-4 md:w-1/3">
+              <input id="forFree" type="checkbox" class="  text-orange-500 h-5 md:w-5 w-3" 
+              checked={isFree}
+              onChange={() => setIsFree(!isFree)}
+              />
+              <label for="forFree" class="ml-2 text-white text-[15px] md:text-[27px]"> For Free</label>
           </div>
-          <div className="flex justify-center">
-            <button className="bg-[#6555FF] rounded-[15px] md:text-[30px]  w-[273px] md:w-[390px] h-[42px] md:h-[60px] mt-4 drop-shadow-md shadow-[#7163FF59] hover:bg-transparent hover:border-4 hover:border-[#4136A3] hover:text-[#4136A3]">
-              Use My Menu
-            </button>
-          </div>
-        </form>
+
+      </div>
+    
+      
+
+      <div class="flex justify-center items-center w-full">
+          <button type="submit" class="hover:bg-[#CF5600] md:w-[330px] md:h-[57px] w-[130px] h-[27px] bg-[#FA8836] text-white md:p-2 p-0 md:text-3xl text-xs font-bold hover:bg-[#CF5600] border-[3px] border-[#FA8836] drop-shadow-md shadow-[#FA8836] hover:bg-transparent  hover:border-[3px] hover:border-[#FA8836] hover:text-[#FA8836] rounded-[40px] 	">AddPrice</button>
+
+      </div>
+
+
+    </form>
+):""}
+
+
+        
+        
+   
         {/* Chefs request Table */}
-        <div className="w-full flex justify-center items-center text-xs	 md:text-3xl m-15 font-bold		">
-          your request for a culinary offer has not been accepted
-          by&#xA0;any&#xA0;chef&#xA0;yet.
-        </div>
+        <div className="w-full flex justify-center items-center  m-4 font-bold">
+        {!event.chef ? (
+         
+          chefOffers.length > 0 ? (
+                <ChefOfferTable />
+          ) : (
+            <p className="text-xs md:text-3xl">
+              Your request for a culinary offer has not been accepted by any chef yet.
+            </p>
+          )
+        ) : (
+          console.log(event,"sss"),
+            invitation.length > 0 ? (
+                 <InvitationTable></InvitationTable>
+              ) : (
+                <p className="text-xs md:text-3xl">
+                  Your request for a culinary Invitation has not been accepted by any user yet.
+                </p>
+              )
+               
+        )}
+       
+      </div>
+
+
+        
       </section>
     </main>
   );
