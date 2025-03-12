@@ -30,7 +30,26 @@ const RequestChefPage = () => {
                     Chat Now
                   </button>
                 </div>
-                {/* Additional event details ... */}
+                <div className="flex items-center mb-3">
+                  <i className="fas fa-info-circle mr-2 text-[10px] sm:text-xs"></i>
+                  <span className="text-[10px] sm:text-sm">My birthday will be August 21st and I want it to be organized</span>
+                </div>
+                <div className="flex items-center mb-3">
+                  <i className="fas fa-map-marker-alt mr-2 text-orange-500 text-[10px] sm:text-xs"></i>
+                  <span className="text-[10px] sm:text-sm">Helton hotel</span>
+                </div>
+                <div className="flex items-center mb-3">
+                  <i className="fas fa-users mr-2 text-[10px] sm:text-xs"></i>
+                  <span className="text-[10px] sm:text-sm">20 to 30 Guests</span>
+                </div>
+                <div className="flex items-center mb-3">
+                  <i className="far fa-calendar-alt mr-2 text-[10px] sm:text-xs"></i>
+                  <span className="text-[10px] sm:text-sm">This event will take place on <span className="text-[#FA8836]">Tuesday 19-02-2025</span></span>
+                </div>
+                <div className="flex items-center mb-3">
+                  <i className="far fa-clock mr-2 text-[10px] sm:text-xs"></i>
+                  <span className="text-[10px] sm:text-sm">From <span className="text-[#FA8836]">07:00 PM</span> until <span className="text-[#FA8836]">10:47 PM</span></span>
+                </div>
               </div>
               <div className="flex justify-center items-center mr-8">
                 <img
@@ -49,83 +68,82 @@ const RequestChefPage = () => {
             <img
               src="./map.jpeg"
               alt="Map"
-              className="w-full h-56 object-cover rounded"
+              className="w-full h-56 object-cover   "
             />
-          </div>
-        </section>
-  
-        {/* Price Section */}
-        <section className="py-8 px-4">
-          <div className="container mx-auto mb-10 p-4 text-center">
-            <div className="h-[2px] bg-[#FA8836] mb-20"></div>
-            <div className="flex flex-col items-center gap-2">
-              <div className="flex items-center gap-2 mt-10 justify-center">
-                <h2 className="text-xl text-white font-bold">Experience Starts at</h2>
-                <input
-                  type="number"
-                  placeholder="800"
-                  className="w-30 p-1 text-black focus:outline-none"
-                />
-                <select className="p-1 text-black focus:outline-none">
-                  <option>USD</option>
-                  <option>EUR</option>
-                  <option>EGP</option>
-                  <option>AUD</option>
-                </select>
-                <span className="text-xs sm:text-base text-white">Per Person</span>
-              </div>
-            </div>
-          </div>
-        </section>
-  
-        {/* Section 4: Menu & Notes & Buttons */}
-        <section className="py-8 px-4">
-          <div className="container mx-auto">
-            {/* Menu Field */}
-            <div className="flex justify-center mb-6">
-              <div className="w-full sm:w-1/2 md:w-1/3">
-                <p className="block mb-1 text-white text-sm sm:text-lg text-left">Menu:</p>
-                <details className="inline-block text-left w-full">
-                  <summary id="menuSummary" className="bg-[#383838CC] text-white border border-[#FA8836] rounded p-2 cursor-pointer focus:outline-none w-full text-sm sm:text-base">
-                    Menu 1
-                  </summary>
-                  <ul className="bg-[#383838CC] text-center text-white border border-[#FA8836] rounded p-2 mt-1 w-full text-sm">
-                    <li className="p-1 hover:bg-[#FA8836] cursor-pointer">Menu 1</li>
-                    <li className="p-1 hover:bg-[#FA8836] cursor-pointer">Menu 2</li>
-                    <li className="p-1 hover:bg-[#FA8836] cursor-pointer">Menu 3</li>
-                    <li className="p-1 hover:bg-[#FA8836] cursor-pointer">Menu 4</li>
-                    <li className="p-1 hover:bg-[#FA8836] cursor-pointer">Menu 5</li>
-                    <li className="p-1 hover:bg-[#FA8836] cursor-pointer">Menu 6</li>
-                  </ul>
-                </details>
-              </div>
-            </div>
-  
-            {/* Add Notes Field */}
-            <div className="flex justify-center mb-6">
-              <div className="w-full sm:w-1/2 md:w-1/3">
-                <label className="block mb-1 text-white text-sm sm:text-lg text-left">Add Notes:</label>
-                <textarea className="bg-[#383838CC] text-white border border-[#FA8836] rounded p-2 focus:outline-none resize-none w-full text-sm" rows="4" placeholder="Add any notes here..."></textarea>
-              </div>
-            </div>
-  
-            {/* Buttons */}
-            <div className="flex flex-wrap gap-2 justify-center mt-4">
-              <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-1 rounded text-xs sm:text-sm">
-                Accept
-              </button>
-              <button className="bg-[#6555FF] hover:bg-[#5244cc] text-white px-4 py-1 rounded text-xs sm:text-sm">
-                Save
-              </button>
-              <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded text-xs sm:text-sm">
-                Decline
-              </button>
-            </div>
-          </div>
-        </section>
-      </div>
-    );
-  };
-  
-  export default RequestChefPage;
-  
+                        </div>
+                      </section>
+                
+                      {/* Price Section */}
+                      <section className="py-8 px-4">
+                        <div className="container mx-auto mb-10 p-4 text-center">
+                          <div className="h-[2px] bg-[#FA8836] mb-20"></div>
+                          <div className="flex flex-col items-center gap-2">
+                            <div className="flex items-center gap-2 mt-10 justify-center">
+                              <h2 className="text-xl text-white font-bold">Experience Starts at</h2>
+                              <input
+                                type="number"
+                                placeholder="800"
+                                className="w-30 p-1 text-black focus:outline-none"
+                              />
+                              <select className="p-1 text-black focus:outline-none">
+                                <option>USD</option>
+                                <option>EUR</option>
+                                <option>EGP</option>
+                                <option>AUD</option>
+                              </select>
+                              <span className="text-xs sm:text-base text-white">Per Person</span>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+                
+                      {/* Section 4: Menu & Notes & Buttons */}
+                      <section className="py-8 px-4">
+                        <div className="container mx-auto">
+                          {/* Menu Field */}
+                          <div className="flex justify-center mb-6">
+                            <div className="w-full sm:w-1/2 md:w-1/3">
+                              <p className="block mb-1 text-white text-sm sm:text-lg text-left">Menu:</p>
+                              <details className="inline-block text-left w-full">
+                                <summary id="menuSummary" className="bg-[#383838CC] text-white border border-[#FA8836] rounded p-2 cursor-pointer focus:outline-none w-full text-sm sm:text-base">
+                                  Menu 1
+                                </summary>
+                                <ul className="bg-[#383838CC] text-center text-white border border-[#FA8836] rounded p-2 mt-1 w-full text-sm">
+                                  <li className="p-1 hover:bg-[#FA8836] cursor-pointer">Menu 1</li>
+                                  <li className="p-1 hover:bg-[#FA8836] cursor-pointer">Menu 2</li>
+                                  <li className="p-1 hover:bg-[#FA8836] cursor-pointer">Menu 3</li>
+                                  <li className="p-1 hover:bg-[#FA8836] cursor-pointer">Menu 4</li>
+                                  <li className="p-1 hover:bg-[#FA8836] cursor-pointer">Menu 5</li>
+                                  <li className="p-1 hover:bg-[#FA8836] cursor-pointer">Menu 6</li>
+                                </ul>
+                              </details>
+                            </div>
+                          </div>
+                
+                          {/* Add Notes Field */}
+                          <div className="flex justify-center mb-6">
+                            <div className="w-full sm:w-1/2 md:w-1/3">
+                              <label className="block mb-1 text-white text-sm sm:text-lg text-left">Add Notes:</label>
+                              <textarea className="bg-[#383838CC] text-white border border-[#FA8836] rounded p-2 focus:outline-none resize-none w-full text-sm" rows="4" placeholder="Add any notes here..."></textarea>
+                            </div>
+                          </div>
+                
+                          {/* Buttons */}
+                          <div className="flex flex-wrap gap-2 justify-center mt-4">
+                            <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-1 rounded text-xs sm:text-sm">
+                              Accept
+                            </button>
+                            <button className="bg-[#6555FF] hover:bg-[#5244cc] text-white px-4 py-1 rounded text-xs sm:text-sm">
+                              Save
+                            </button>
+                            <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded text-xs sm:text-sm">
+                              Decline
+                            </button>
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  );
+                };
+                
+                export default RequestChefPage;
