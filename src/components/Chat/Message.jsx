@@ -2,7 +2,7 @@ import React from "react";
 import AudioWaveform from "./AudioWaveform";
 const Message = ({ Messages, userData }) => {
   return (
-    console.log(Messages),
+ 
     <>
     
       {(Messages.data||[]).map((data, index) => {

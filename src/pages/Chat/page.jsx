@@ -15,7 +15,8 @@ import isJwtTokenValid from "../../utils/validateToken";
  // import ChatMessages from "../../components/Chat/ChatMessage";
  import SendMedia from "../../services/Chat/SendMedia"
 import ChatMessages from "../../components/Chat/ChatMessage";
-
+import { useParams, useNavigate } from "react-router-dom";
+import {getUserByIdsService} from "../../services/User/GetUserById"
 import Picker from "@emoji-mart/react";
 
 function Chat( ) {
@@ -119,11 +120,13 @@ const formatTime = (seconds) => {
   const [content, setContent] = useState("");
   const [originalChats, setOriginalChats] = useState(chats);
   const [filteredChats, setFilteredChats] = useState(chats);
+  const[flag,setFlage] = useState(false)
+  const { id } = useParams(); 
   const handleChange = (event) => {
     setContent(event.target.value);
     setEmoji("");
   };
-  
+ 
   useEffect(() => {
     checkSignIn();
   });
@@ -136,8 +139,7 @@ const formatTime = (seconds) => {
 
         if (isValid) {
          
-          console.log(JSON.parse(localStorage.getItem("user")))
-          setUserData(JSON.parse(localStorage.getItem("user")));
+           setUserData(JSON.parse(localStorage.getItem("user")));
         } else {
  
           
@@ -174,11 +176,38 @@ const formatTime = (seconds) => {
           .start()
           .then(() => {
               console.log("✅ Connected to SignalR");
-              GetChats(newConnection, setChats).then(() =>{
+              GetChats(newConnection, setChats).then( () =>{
                   setTimeout(() => {
                     setIsisLoading(false)
                     
                   }, 500);
+                  if (!id) {
+                    return;
+                 }
+             
+                 const fetchData = async () => {
+                   await  getUserByIdsService(id).then(async (data) => {
+                  
+                   
+                     await getMessageByChatId(newConnection, setMessages, data.data.chatId).then(()=>{
+                      setMessages((prev) => ({
+                        ...prev,      
+                        user: data.data|| null,  
+                    }));
+                     });
+                 
+                     
+                      
+                  
+                   
+                    // setUserData(data.data);
+                    // SendMessage(connection, data.data.id, "");
+             
+                    // setFlage(true)
+                   })
+                 };
+             
+                 fetchData();
 
               } );
           })
@@ -190,10 +219,15 @@ const formatTime = (seconds) => {
               .catch((error) => console.error("❌ Error disconnecting:", error));
       };
   }, []);
-  
+  useEffect(() => {
+     
+    console.log(Messages,"adsda")
+  }, [id]);
   const ShowMessage = async (chatId) => {
+
     if (!connection) return;
-    
+    console.log("ssss")
+
     await getMessageByChatId(connection, setMessages, chatId);
 
     setMessages((prev) => ({
@@ -202,8 +236,7 @@ const formatTime = (seconds) => {
     }));
 };
 useEffect(() => {
-  console.log("Updated Messages:", Messages);
-}, [Messages]);
+ }, [Messages]);
 
 
  

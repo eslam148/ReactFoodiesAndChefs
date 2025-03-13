@@ -10,6 +10,7 @@ import ChefList from "../../../components/ChefList/Component";
 import ChefOfferTable from "../../../components/Table/ChefOffersTable";
 import InvitationTable from "../../../components/Table/invitationTable";
 import { getMyMenu } from "../../../services/menus/menus";
+import ProfileTempImg from  "../../../assets/images/profileTemp.webp"  
 
 function ShowEventPage() {
   const { eventId } = useParams();
@@ -37,8 +38,11 @@ function ShowEventPage() {
   useEffect(() => {
     const getMeue = async () => {
       const res = await getMyMenu();
-      console.log(res.data);
-      setMyMenu(res.data);
+      console.log(res);
+      if(res){
+        setMyMenu(res.data);
+      }
+     
       
     }
     getMeue();
@@ -61,10 +65,7 @@ function ShowEventPage() {
     updateEvent(eventId);
   }, []);
 
-  const handleFavoriteClick = () => {
-    console.log("Favorite");
-  };
-
+  
   const handleCopyClick = async () => {
     try {
       const inviteLink = `${window.location.origin}/showRequest/${eventId}`;
@@ -234,16 +235,24 @@ function ShowEventPage() {
         <button className="bg-main-color text-white text-sm px-4 py-2 rounded-xl hover:bg-orange-600 transition w-1/3">
           Menu
         </button>
-        <button className="bg-main-green-color text-white text-sm px-4 py-2 rounded-xl hover:bg-orange-600 transition w-1/3">
+        <a   href={"/chat/"+event.chef?.id} className="bg-main-green-color text-white text-sm px-4 py-2 rounded-xl hover:bg-orange-600 transition w-1/3">
           Chat Now
-        </button>
+        </a>
       </div>
     </div>
 
     {/* Right Section - Image */}
     <div className="w-full md:w-1/2 flex justify-center p-5">
       <img
-        src={process.env.REACT_APP_API_URL+"/"+event.chef?.profileImageLink}
+       src={
+        event.chef?.profileImageLink
+          ?  event.chef?.profileImageLink.includes("http")
+            ?  event.chef?.profileImageLink
+            : `${process.env.REACT_APP_API_URL}/${ event.chef?.profileImageLink}`
+          : ProfileTempImg
+      }
+        
+        
         alt="Italian Delight"
         className="object-cover rounded-2xl border-2 border-main-color w-full md:w-[300px]"
       />
@@ -252,12 +261,16 @@ function ShowEventPage() {
 ) : (
   
   <div>
+      <div className="h-[3px] bg-main-color mb-8"></div>
+        <h2 className="text-center sm:text-4xl md:text-6xl font-bold text-[#FA8836] mb-16 mt-14">
+          Chef's Event Menus
+        </h2>
     <ChefList></ChefList>
     {/* Copy link Table */}
-    <p className="plus-jakarta-sans text-[15px] md:text-[26px] border-t border-main-color w-full text-start pt-5 font-bold">
+    <p className="plus-jakarta-sans text-[15px] md:text-[26px] border-t border-main-color w-full text-start pt-5 font-bold my-5">
       Invite your favorite chef to submit their offer via this link
     </p>
-    <div className="relative w-full flex justify-center items-center">
+    <div className="relative w-full flex justify-center items-center my-2">
       <div className="border-2 border-[#FA883669] text-center p-0.5 bg-[#73737354] w-full lg:w-3/4 lg:h-16 h-[38px] rounded-[30px] flex justify-between items-center">
         <button
           className="md:mx-7 mx-2 mb-1 md:mb-0 bg-transparent"
@@ -300,7 +313,7 @@ function ShowEventPage() {
           name="MenuId"
           className="text-xs md:text-xl appearance-none md:w-5/12 w-2/3 px-4 py-2 rounded-[15px] text-white opacity-70 h-[39px] md:h-[48px] border border-main-color bg-[#444444] form-control p-3 focus:border-[#fa8836be] focus:ring-2 focus:ring-[#ecaf4a] focus:outline-none"
         >
-          {myMenu.length > 0 ? (
+          { myMenu.length > 0 ? (
             myMenu.map((menu, index) => (
               <option key={index} value={menu.id} className="bg-white text-black">
                 {menu.menuName}
@@ -329,13 +342,14 @@ function ShowEventPage() {
 )}
 
 
-{!event.price && event.price !== 0 ? (
+ {!event.price && event.price !== 0 && event.chef ? (
+ 
       <form method ="post" onSubmit={AddPrice}  asp-action="AddPrice" class="bg-[#D9D9D926]   w-full  flex flex-col plus-jakarta-sans p-3 md:p-10 py-6 space-y-12 border border-[#FA8836] rounded-[5px]">
       <div class="flex justify-around w-full space-y-10 md:space-y-0">
 
           <div class="flex md:flex-row flex-col  justify-between md:items-start items-center space-y-5 md:space-y-0 md:w-2/3">
 
-              <label for="price" class="text-white font-semibold text-[15px] md:text-[27px] ">SharedCostGuest</label>
+              <label for="price" class="text-white font-semibold text-[15px] md:text-[27px] ">Shared Cost/Guest</label>
               <div class="flex items-center   justify-center md:w-6/12 w-full">
                 
 
@@ -373,10 +387,12 @@ function ShowEventPage() {
 
 
         
+      {/* <ChefList></ChefList> */}
         
    
         {/* Chefs request Table */}
         <div className="w-full flex justify-center items-center  m-4 font-bold">
+
         {!event.chef ? (
          
           chefOffers.length > 0 ? (

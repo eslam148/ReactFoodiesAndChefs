@@ -1,6 +1,5 @@
 const ReceiveMessage = async (connection, setMessages,setChats) => {
-    console.log("Starting ReceiveMessage...");
-
+ 
     if (!connection) {
         console.error("SignalR connection is not available.");
         return;
@@ -9,15 +8,13 @@ const ReceiveMessage = async (connection, setMessages,setChats) => {
     try {
         if (connection.state === "Disconnected") {
             await connection.start();
-            console.log("SignalR connection started successfully.");
-        }
+         }
 
        
         connection.off("ReceiveMessage");
 
         connection.on("ReceiveMessage", (ChatsId,message) => {
-            console.log("Received messageeeeee:", ChatsId,message);
-            setMessages(prevChats => ({
+             setMessages(prevChats => ({
                 ...prevChats,
                 data: [...prevChats.data, message]
             }));
@@ -56,7 +53,7 @@ const ReceiveMessage = async (connection, setMessages,setChats) => {
             setTimeout(async () => {
                 try {
                     await connection.start();
-                    console.log("Reconnected to SignalR hub.");
+                   
                 } catch (err) {
                     console.error("Reconnection failed:", err);
                 }

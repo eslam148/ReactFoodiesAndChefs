@@ -21,7 +21,7 @@ function MeetOurChefs() {
 
   return (
     <main
-      className="invites-page min-h-[80dvh]  md:flex md:gap-10 mt-0 p-0 plus-jakarta-sans"
+      className="mainbg invites-page min-h-[80dvh]  md:flex md:gap-10 mt-0 p-0 plus-jakarta-sans"
       id="overlay"
     >
       <section className="min-h-screen bg-white relative   space-y-6 md:min-h-full flex flex-col w-full items-center p-3 md:p-5 z-10 text-start lato-bold md:pl-10 plus-jakarta-sans box-border">

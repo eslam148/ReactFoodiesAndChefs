@@ -12,13 +12,15 @@ import checkSignIn from "../../utils/checkSignIn";
 
 function ChefProfile({ isEditable, userData, setUserData }) {
   const navigate = useNavigate();
-
+console.log(userData)
   const [error, setError] = useState("");
   const [profilePicError, setProfilePicError] = useState("");
   const [preview, setPreview] = useState(
     userData?.profileImageLink
-      ? `${process.env.REACT_APP_API_URL}/${userData.profileImageLink}`
-      : ProfileTempImg // Replace with a placeholder
+                  ? userData.profileImageLink.includes("http")
+                    ? userData.profileImageLink
+                    : `${process.env.REACT_APP_API_URL}/${userData.profileImageLink}`
+                  : ProfileTempImg
   );
   const fileInputRef = useRef(null);
 
@@ -63,16 +65,16 @@ const AddToFavorate = () => {}
                     Add to Favorite
                 </button>
                 <div class="flex items-center mt-4 gap-2 justify-center">
-                    <button
+                    <a  href="/events/create"
                         class="flex items-center bg-[#FA8836] hover:bg-orange-600 text-white px-3 py-2 rounded-lg focus:outline-none">
                         <i class="fas fa-envelope mr-2"></i>
                         Send Request
-                    </button>
-                    <button
+                    </a>
+                    <a  href={"/chat/"+userData.id}
                         class="flex items-center bg-[#128000] hover:bg-green-800 text-white px-3 py-2 rounded-lg focus:outline-none">
                         <i class="fas fa-comment mr-2"></i>
                         Chat Now
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>

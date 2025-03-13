@@ -24,7 +24,7 @@ const getMessageByChatId = async (connection, setMessages, _ChatId) => {
                 (a, b) => new Date(a.timestamp) - new Date(b.timestamp)
             );
 
-           
+           console.log("Form Message",messages)
             setMessages(messages);
         });
 

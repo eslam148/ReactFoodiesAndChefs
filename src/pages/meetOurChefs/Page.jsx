@@ -10,6 +10,7 @@ import Img5 from "../../assets/images/img5.webp";
 import Img6 from "../../assets/images/img6.jpeg";
 import Img7 from "../../assets/images/img7.jpeg";
 import Img8 from "../../assets/images/img8.jpeg";
+import ChefList from "../../components/ChefList/Component"
 function MeetOurChefs() {
   const { t } = useTranslation();
   // const [invites, setInvites] = useState([]);
@@ -20,367 +21,46 @@ function MeetOurChefs() {
 
   return (
     <main
-      className="invites-page min-h-[80dvh]  md:flex md:gap-10 mt-0 p-0 plus-jakarta-sans"
+      className=" invites-page min-h-[80dvh]  md:flex md:gap-10 mt-0 p-0 plus-jakarta-sans"
       id="overlay"
     >
-      <section className="min-h-screen bg-white relative   space-y-6 md:min-h-full flex flex-col w-full items-center p-3 md:p-5 z-10 text-start lato-bold md:pl-10 plus-jakarta-sans box-border">
+      <section className="min-h-screen mainbg *:text-white bg-white relative   space-y-6 md:min-h-full flex flex-col w-full items-center p-3 md:p-5 z-10 text-start lato-bold md:pl-10 plus-jakarta-sans box-border">
         <h2 className="text-black">
           {t("meetOurChefs.BenefitsofBookingPrivateChefs")}
         </h2>
         <p className="text-black">{t("meetOurChefs.IndulgeInaCulinary")}</p>
-        <div className="text-black flex md:flex-row flex-col gap-5 justify-center items-center *:w-1/4 md:*:w-full">
+        <div className="text-black flex md:flex-row flex-col gap-5 justify-center items-center *:w-1/4 md:*:w-full px-32">
           <div className="flex flex-col gap-2 items-center  ">
             <i className="fa-solid fa-check text-main-color text-3xl"></i>
 
-            <h3 className="text-xl">{t("meetOurChefs.CustomizedMenus")}</h3>
+            <h3 className="text-xl text-main-color">{t("meetOurChefs.CustomizedMenus")}</h3>
             <p>{t("meetOurChefs.OurChefsCraft")}</p>
           </div>
           <div className="flex flex-col gap-2 items-center  ">
             <i className="fa-solid fa-check text-main-color text-3xl"></i>
 
-            <h3 className="text-xl">{t("meetOurChefs.FineDining")}</h3>
+            <h3 className="text-xl text-main-color">{t("meetOurChefs.FineDining")}</h3>
             <p>{t("meetOurChefs.EnjoyGourmet")}</p>
           </div>
           <div className="flex flex-col gap-2 items-center ">
             <i className="fa-solid fa-check text-main-color text-3xl"></i>
-            <h3 className="text-xl">{t("meetOurChefs.UniqueCulinary")}</h3>
+            <h3 className="text-xl text-main-color">{t("meetOurChefs.UniqueCulinary")}</h3>
             <p>{t("meetOurChefs.DelightYourGuests")}</p>
           </div>
         </div>
 
         <div className="bg-black rounded-3xl w-full p-20  flex flex-col gap-3">
-          <h2 className="text-start text-main-color text-3xl md:text-5xl">
+          <h2 className="text-center text-main-color text-3xl md:text-5xl">
             {t("meetOurChefs.MeetOurChefs")}
           </h2>
           <p className="m-auto my-3 text-xl w-3/4">
             {t("meetOurChefs.Explorechefprofiles")}
           </p>
-          <div className="flex   flex-wrap space-y-5  ">
-            <div className="flex w-full md:w-fit justify-end md:justify-start">
-              <div className="flex ltr:flex-row rtl:flex-row-reverse">
-                <div className="border-y-2 border-l-2 border-main-color rounded-l-full text-l px-2 py-1 h-9 bg-transparent flex items-center">
-                  <i className="fa-solid fa-magnifying-glass text-lg"></i>
-                </div>
-                <input
-                  placeholder={t("meetOurChefs.searchPlaceholder")}
-                  className="bg-transparent text-main-color border-2 border-main-color border-l-0 rounded-r-full h-9 flex-grow px-3 focus:outline-none"
-                  // value={searchTerm}
-                  // onChange={handleSearch}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="flex  flex-wrap items-center md:items-start  justify-center *:w-full md:*:w-1/4 gap-5 my-10 px-5">
-            <div className="flex flex-col items-center gap-2">
-              <img
-                src="/static/media/ServiceImg1.87ae2fb75f8ab27f6a8b.webp"
-                className="object-cover w-56 h-56 rounded-xl"
-                alt=""
-              />
-              <span className="text-xl">
-                {" "}
-                <i className="fa-regular fa-heart text-main-color "></i> Chef
-                Marco Rossi
-              </span>
-              <span className="text-sm">French Delicacies</span>
-              <div className="flex gap-2">
-                <span className="text-sm">
-                  <i className="fa-solid fa-check text-main-color "></i>{" "}
-                  {t("meetOurChefs.Order")}
-                </span>
-                <span className="text-sm">
-                  <i className="fa-solid fa-check text-main-color "></i>{" "}
-                  {t("meetOurChefs.Book")}
-                </span>
-                <span className="text-sm">
-                  <i className="fa-solid fa-check text-main-color "></i>{" "}
-                  {t("meetOurChefs.Catering")}
-                </span>
-              </div>
-              <p className="flex  w-2/3 text-center">
-                Expert in traditional Italian dishes, known for his handmade
-                pasta.
-              </p>
-              <button className="text-sm bg-[#207237] p-2 rounded-xl ">
-                {t("meetOurChefs.ChatNow")}
-              </button>
-            </div>
-            <div className="flex flex-col items-center gap-2">
-              <img
-                src="/static/media/ServiceImg1.87ae2fb75f8ab27f6a8b.webp"
-                className="object-cover w-56 h-56 rounded-xl"
-                alt=""
-              />
-              <span className="text-xl">
-                {" "}
-                <i className="fa-regular fa-heart text-main-color "></i> Chef
-                Marco Rossi
-              </span>
-              <span className="text-sm">French Delicacies</span>
-              <div className="flex gap-2">
-                <span className="text-sm">
-                  <i className="fa-solid fa-check text-main-color "></i>{" "}
-                  {t("meetOurChefs.Order")}
-                </span>
-                <span className="text-sm">
-                  <i className="fa-solid fa-check text-main-color "></i>{" "}
-                  {t("meetOurChefs.Book")}
-                </span>
-                <span className="text-sm">
-                  <i className="fa-solid fa-check text-main-color "></i>{" "}
-                  {t("meetOurChefs.Catering")}
-                </span>
-              </div>
-              <p className="flex  w-2/3 text-center">
-                Expert in traditional Italian dishes, known for his handmade
-                pasta.
-              </p>
-              <button className="text-sm bg-[#207237] p-2 rounded-xl ">
-                {t("meetOurChefs.ChatNow")}
-              </button>
-            </div>
-            <div className="flex flex-col items-center gap-2">
-              <img
-                src="/static/media/ServiceImg1.87ae2fb75f8ab27f6a8b.webp"
-                className="object-cover w-56 h-56 rounded-xl"
-                alt=""
-              />
-              <span className="text-xl">
-                {" "}
-                <i className="fa-regular fa-heart text-main-color "></i> Chef
-                Marco Rossi
-              </span>
-              <span className="text-sm">French Delicacies</span>
-              <div className="flex gap-2">
-                <span className="text-sm">
-                  <i className="fa-solid fa-check text-main-color "></i>{" "}
-                  {t("meetOurChefs.Order")}
-                </span>
-                <span className="text-sm">
-                  <i className="fa-solid fa-check text-main-color "></i>{" "}
-                  {t("meetOurChefs.Book")}
-                </span>
-                <span className="text-sm">
-                  <i className="fa-solid fa-check text-main-color "></i>{" "}
-                  {t("meetOurChefs.Catering")}
-                </span>
-              </div>
-              <p className="flex  w-2/3 text-center">
-                Expert in traditional Italian dishes, known for his handmade
-                pasta.
-              </p>
-              <button className="text-sm bg-[#207237] p-2 rounded-xl ">
-                {t("meetOurChefs.ChatNow")}
-              </button>
-            </div>
-            <div className="flex flex-col items-center gap-2">
-              <img
-                src="/static/media/ServiceImg1.87ae2fb75f8ab27f6a8b.webp"
-                className="object-cover w-56 h-56 rounded-xl"
-                alt=""
-              />
-              <span className="text-xl">
-                {" "}
-                <i className="fa-regular fa-heart text-main-color "></i> Chef
-                Marco Rossi
-              </span>
-              <span className="text-sm">French Delicacies</span>
-              <div className="flex gap-2">
-                <span className="text-sm">
-                  <i className="fa-solid fa-check text-main-color "></i>{" "}
-                  {t("meetOurChefs.Order")}
-                </span>
-                <span className="text-sm">
-                  <i className="fa-solid fa-check text-main-color "></i>{" "}
-                  {t("meetOurChefs.Book")}
-                </span>
-                <span className="text-sm">
-                  <i className="fa-solid fa-check text-main-color "></i>{" "}
-                  {t("meetOurChefs.Catering")}
-                </span>
-              </div>
-              <p className="flex  w-2/3 text-center">
-                Expert in traditional Italian dishes, known for his handmade
-                pasta.
-              </p>
-              <button className="text-sm bg-[#207237] p-2 rounded-xl ">
-                {t("meetOurChefs.ChatNow")}
-              </button>
-            </div>
-            <div className="flex flex-col items-center gap-2">
-              <img
-                src="/static/media/ServiceImg1.87ae2fb75f8ab27f6a8b.webp"
-                className="object-cover w-56 h-56 rounded-xl"
-                alt=""
-              />
-              <span className="text-xl">
-                {" "}
-                <i className="fa-regular fa-heart text-main-color "></i> Chef
-                Marco Rossi
-              </span>
-              <span className="text-sm">French Delicacies</span>
-              <div className="flex gap-2">
-                <span className="text-sm">
-                  <i className="fa-solid fa-check text-main-color "></i>{" "}
-                  {t("meetOurChefs.Order")}
-                </span>
-                <span className="text-sm">
-                  <i className="fa-solid fa-check text-main-color "></i>{" "}
-                  {t("meetOurChefs.Book")}
-                </span>
-                <span className="text-sm">
-                  <i className="fa-solid fa-check text-main-color "></i>{" "}
-                  {t("meetOurChefs.Catering")}
-                </span>
-              </div>
-              <p className="flex  w-2/3 text-center">
-                Expert in traditional Italian dishes, known for his handmade
-                pasta.
-              </p>
-              <button className="text-sm bg-[#207237] p-2 rounded-xl ">
-                {t("meetOurChefs.ChatNow")}
-              </button>
-            </div>
-            <div className="flex flex-col items-center gap-2">
-              <img
-                src="/static/media/ServiceImg1.87ae2fb75f8ab27f6a8b.webp"
-                className="object-cover w-56 h-56 rounded-xl"
-                alt=""
-              />
-              <span className="text-xl">
-                {" "}
-                <i className="fa-regular fa-heart text-main-color "></i> Chef
-                Marco Rossi
-              </span>
-              <span className="text-sm">French Delicacies</span>
-              <div className="flex gap-2">
-                <span className="text-sm">
-                  <i className="fa-solid fa-check text-main-color "></i>{" "}
-                  {t("meetOurChefs.Order")}
-                </span>
-                <span className="text-sm">
-                  <i className="fa-solid fa-check text-main-color "></i>{" "}
-                  {t("meetOurChefs.Book")}
-                </span>
-                <span className="text-sm">
-                  <i className="fa-solid fa-check text-main-color "></i>{" "}
-                  {t("meetOurChefs.Catering")}
-                </span>
-              </div>
-              <p className="flex  w-2/3 text-center">
-                Expert in traditional Italian dishes, known for his handmade
-                pasta.
-              </p>
-              <button className="text-sm bg-[#207237] p-2 rounded-xl ">
-                {t("meetOurChefs.ChatNow")}
-              </button>
-            </div>
-            <div className="flex flex-col items-center gap-2">
-              <img
-                src="/static/media/ServiceImg1.87ae2fb75f8ab27f6a8b.webp"
-                className="object-cover w-56 h-56 rounded-xl"
-                alt=""
-              />
-              <span className="text-xl">
-                {" "}
-                <i className="fa-regular fa-heart text-main-color "></i> Chef
-                Marco Rossi
-              </span>
-              <span className="text-sm">French Delicacies</span>
-              <div className="flex gap-2">
-                <span className="text-sm">
-                  <i className="fa-solid fa-check text-main-color "></i>{" "}
-                  {t("meetOurChefs.Order")}
-                </span>
-                <span className="text-sm">
-                  <i className="fa-solid fa-check text-main-color "></i>{" "}
-                  {t("meetOurChefs.Book")}
-                </span>
-                <span className="text-sm">
-                  <i className="fa-solid fa-check text-main-color "></i>{" "}
-                  {t("meetOurChefs.Catering")}
-                </span>
-              </div>
-              <p className="flex  w-2/3 text-center">
-                Expert in traditional Italian dishes, known for his handmade
-                pasta.
-              </p>
-              <button className="text-sm bg-[#207237] p-2 rounded-xl ">
-                {t("meetOurChefs.ChatNow")}
-              </button>
-            </div>
-            <div className="flex flex-col items-center gap-2">
-              <img
-                src="/static/media/ServiceImg1.87ae2fb75f8ab27f6a8b.webp"
-                className="object-cover w-56 h-56 rounded-xl"
-                alt=""
-              />
-              <span className="text-xl">
-                {" "}
-                <i className="fa-regular fa-heart text-main-color "></i> Chef
-                Marco Rossi
-              </span>
-              <span className="text-sm">French Delicacies</span>
-              <div className="flex gap-2">
-                <span className="text-sm">
-                  <i className="fa-solid fa-check text-main-color "></i>{" "}
-                  {t("meetOurChefs.Order")}
-                </span>
-                <span className="text-sm">
-                  <i className="fa-solid fa-check text-main-color "></i>{" "}
-                  {t("meetOurChefs.Book")}
-                </span>
-                <span className="text-sm">
-                  <i className="fa-solid fa-check text-main-color "></i>{" "}
-                  {t("meetOurChefs.Catering")}
-                </span>
-              </div>
-              <p className="flex  w-2/3 text-center">
-                Expert in traditional Italian dishes, known for his handmade
-                pasta.
-              </p>
-              <button className="text-sm bg-[#207237] p-2 rounded-xl ">
-                {t("meetOurChefs.ChatNow")}
-              </button>
-            </div>
-            <div className="flex flex-col items-center gap-2">
-              <img
-                src="/static/media/ServiceImg1.87ae2fb75f8ab27f6a8b.webp"
-                className="object-cover w-56 h-56 rounded-xl"
-                alt=""
-              />
-              <span className="text-xl">
-                {" "}
-                <i className="fa-regular fa-heart text-main-color "></i> Chef
-                Marco Rossi
-              </span>
-              <span className="text-sm">French Delicacies</span>
-              <div className="flex gap-2">
-                <span className="text-sm">
-                  <i className="fa-solid fa-check text-main-color "></i>{" "}
-                  {t("meetOurChefs.Order")}
-                </span>
-                <span className="text-sm">
-                  <i className="fa-solid fa-check text-main-color "></i>{" "}
-                  {t("meetOurChefs.Book")}
-                </span>
-                <span className="text-sm">
-                  <i className="fa-solid fa-check text-main-color "></i>{" "}
-                  {t("meetOurChefs.Catering")}
-                </span>
-              </div>
-              <p className="flex  w-2/3 text-center">
-                Expert in traditional Italian dishes, known for his handmade
-                pasta.
-              </p>
-              <button className="text-sm bg-[#207237] p-2 rounded-xl ">
-                {t("meetOurChefs.ChatNow")}
-              </button>
-            </div>
-          </div>
+         <ChefList></ChefList>
+          
         </div>
 
-        <div className="bg-black rounded-3xl w-full p-20  flex flex-col gap-3">
+        <div className="bg-black rounded-3xl w-full p-20  flex flex-col gap-3 *:text-white">
           <h2 className="text-start text-main-color text-3xl md:text-5xl">
             {t("meetOurChefs.ExploreTopChefDishes")}
           </h2>
@@ -463,7 +143,7 @@ function MeetOurChefs() {
           <h2 className="text-center text-main-color text-3xl md:text-5xl">
             {t("meetOurChefs.RecentEvents")}
           </h2>
-          <p className="m-auto my-3 text-xl w-3/4 text-black">
+          <p className="m-auto my-3 text-xl w-3/4  ">
             {t("meetOurChefs.DiscoverHowOurChefs")}
           </p>
           <div className="max-w-6xl mx-auto p-16 columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
@@ -486,7 +166,7 @@ function MeetOurChefs() {
           <h2 className="text-start text-main-color text-3xl md:text-5xl">
             {t("meetOurChefs.WhatOurChefsareSaying")}
           </h2>
-          <p className="m-auto my-3 text-xl w-3/4 text-black">
+          <p className="m-auto my-3 text-xl w-3/4  ">
             {t("meetOurChefs.DiscoverHowOurChefs")}
           </p>
           <div>
@@ -573,8 +253,8 @@ function MeetOurChefs() {
                 </div>
               </div>
             </div>
-            <div className="my-5 text-black flex flex-col justify-center items-center ">
-              <h2 className="  text-3xl md:text-4xl ">
+            <div className="my-5 text-black flex flex-col justify-center items-center *:text-white ">
+              <h2 className="  text-3xl md:text-4xl  ">
                 {t("meetOurChefs.NeedMoreHelp")}
               </h2>
               <span className="p-2 border-t-2 border-main-color  my-2 ">

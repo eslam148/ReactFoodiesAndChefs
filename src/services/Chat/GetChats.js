@@ -3,7 +3,7 @@ const GetChats = async (connection, setChats) => {
         if (!connection) return;
        
         connection.on("ReceiveChats", (Chats) => {
-            console.log("Received Chats:", Chats);
+            
             setChats(Chats);
         });
 

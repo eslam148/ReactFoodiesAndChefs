@@ -75,6 +75,7 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/profile/edit" element={<EditProfilePage />} />
           <Route path="/ChefProfile" element={<ChefProfilePage />} />
+          <Route path="/ChefProfile/:id" element={<ChefProfilePage />} />
 
           {/* Invites Pages */}
           <Route path="/invites" element={<InvitesPage />} />
@@ -95,6 +96,7 @@ function App() {
 
              {/* Chat Page */}
           <Route path="/Chat" element={<Chat />} />
+          <Route path="/chat/:id" element={<Chat />} />
           {/* Handling any other route */}
           <Route path="*" element={<NoPage />} />
         </Routes>

@@ -1,7 +1,7 @@
 import React from "react";
 import Message from "./Message";
 const ChatMessages = ({ Messages, userData, chatContainerRef, setIsModalOpen }) => {
-  return (
+   return (
     <>
     <div className="flex flex-col">
       {/* Chat Header */}
@@ -31,12 +31,12 @@ const ChatMessages = ({ Messages, userData, chatContainerRef, setIsModalOpen }) 
       {/* Chat Body */}
       <div
         ref={chatContainerRef}
-        className="max-h-[80vh] overflow-y-auto bg-black px-3 py-4 flex flex-col gap-5"
+        className="min-h-[80vh] overflow-y-auto bg-black px-3 py-4 flex flex-col gap-5 justify-end"
         id="message"
       >
       
 
-
+         
         <Message Messages={Messages} userData={userData} />
 
       </div>
