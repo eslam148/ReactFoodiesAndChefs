@@ -148,9 +148,9 @@ function HomePage() {
                 <p className="text-xs leading-5 px-2 mt-2 text-start">
                   {t("home.services.details.service1.description")}
                 </p>
-                <button className="mt-3 bg-transparent text-lg border-2 border-x-main-color border-y-gray-500 px-2 py-1">
+                <a href="/meetOurChefs" className="rounded-[10px] mt-3 bg-transparent text-lg border-2 border-x-main-color border-y-gray-500 px-2 py-1">
                   {t("home.services.details.service1.button")}
-                </button>
+                </a>
               </div>
             </div>
             <div className="flex flex-col items-center">
@@ -168,9 +168,9 @@ function HomePage() {
                   {t("home.services.details.service2.description")}
                 </p>
                 <div className="mb-10" />
-                <button className="bg-transparent text-lg border-2 border-x-main-color border-y-gray-500 px-2 py-1">
+                <a href="/meetOurChefs" className="text-white bg-transparent text-lg border-2 border-x-main-color border-y-gray-500 px-2 py-1 rounded-[10px]">
                   {t("home.services.details.service2.button")}
-                </button>
+                </a>
               </div>
             </div>
             <div className="flex flex-col items-center">
@@ -188,9 +188,9 @@ function HomePage() {
                   {t("home.services.details.service3.description")}
                 </p>
                 <div className="mb-6" />
-                <button className="bg-transparent text-lg border-2 border-x-main-color border-y-gray-500 px-2 py-1">
+                <a href="/events/create" className="text-white bg-transparent text-lg border-2 border-x-main-color border-y-gray-500 px-2 py-1 rounded-[10px]">
                   {t("home.services.details.service3.button")}
-                </button>
+                </a>
               </div>
             </div>
           </div>
@@ -241,9 +241,9 @@ function HomePage() {
           </p>
 
           {/* Button */}
-          <button className="mt-5 bg-transparent text-lg border-2 border-main-color px-4 py-2 rounded-md hover:bg-main-color hover:text-white transition-all duration-300">
+          <a href="/signup" className="text-white mt-5 bg-transparent text-lg border-2 border-main-color px-4 py-2 rounded-md hover:bg-main-color hover:text-white transition-all duration-300">
             {t("home.joinCommunity.button")}
-          </button>
+          </a>
 
           {/* Bottom Image Group */}
           <FourImagesGroup
