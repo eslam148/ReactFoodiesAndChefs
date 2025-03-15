@@ -15,6 +15,9 @@ import Img6 from "../../assets/images/img6.jpeg";
 import Img7 from "../../assets/images/img7.jpeg";
 import Img8 from "../../assets/images/img8.jpeg";
 import { useTranslation } from "react-i18next";
+import isJwtTokenValid from "../../utils/validateToken";
+import {  useEffect, useState } from "react";
+import resetLocalStorage from "../../utils/resetLocalStorage";
 
 const howItWorksSteps = [
   {
@@ -43,11 +46,7 @@ const howItWorksSteps = [
     title: "home.howItWorks.steps.step5.title",
     description: "home.howItWorks.steps.step5.description",
   },
-  {
-    icon: "fa-solid fa-money-bill",
-    title: "home.howItWorks.steps.step6.title",
-    description: "home.howItWorks.steps.step6.description",
-  },
+  
   {
     icon: "fa-solid fa-envelope",
     title: "home.howItWorks.steps.step7.title",
@@ -57,7 +56,29 @@ const howItWorksSteps = [
 
 function HomePage() {
   const { t } = useTranslation();
+  const [userData, setUserData] = useState("");
+  const [isSignedIn, setIsSignedIn] = useState(false);
 
+    useEffect(() => {
+      const validateJwtToken = () => {
+        const token = localStorage.getItem("token");
+  
+        if (token) {
+          const isValid = isJwtTokenValid(token);
+  
+          if (isValid) {
+            setIsSignedIn(true);
+            setUserData(JSON.parse(localStorage.getItem("user")));
+          } else {
+            setIsSignedIn(false);
+  
+            resetLocalStorage();
+          }
+        }
+      };
+  
+      validateJwtToken();
+    }, []);
   return (
     <main
       className="HomePage min-h-[80dvh] md:flex md:gap-10 mt-0 p-0"
@@ -135,24 +156,31 @@ function HomePage() {
           </div>
 
           <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:px-20  gap-6 justify-center">
+
             <div className="flex flex-col items-center">
               <img
                 className="object-cover w-56 h-56 rounded-xl"
                 src={ServiceImg1}
                 alt="ChefImg"
               />
-              <div className="border-2 rounded-3xl w-56 py-4 px-4 mt-4 text-center">
+              <div className="border-2 rounded-3xl w-56 py-2 px-4 mt-4">
                 <h2 className="text-lg font-bold">
                   {t("home.services.details.service1.title")}
                 </h2>
+                <div className="mb-4" >
                 <p className="text-xs leading-5 px-2 mt-2 text-start">
                   {t("home.services.details.service1.description")}
                 </p>
-                <a href="/meetOurChefs" className="rounded-[10px] mt-3 bg-transparent text-lg border-2 border-x-main-color border-y-gray-500 px-2 py-1">
+                </div>
+                <div className="mb-5" >
+                <a href="/meetOurChefs" className="text-white rounded-[10px] mt-3 bg-transparent text-lg border-2 border-x-main-color border-y-gray-500 px-2 py-1">
                   {t("home.services.details.service1.button")}
                 </a>
+                </div>
+               
               </div>
             </div>
+
             <div className="flex flex-col items-center">
               <img
                 className="object-cover w-56 h-56 rounded-xl"
@@ -163,16 +191,19 @@ function HomePage() {
                 <h2 className="text-lg font-bold">
                   {t("home.services.details.service2.title")}
                 </h2>
-                <div className="mb-4" />
+                <div className="mb-10" >
                 <p className="text-xs leading-5 px-4 text-start">
                   {t("home.services.details.service2.description")}
                 </p>
-                <div className="mb-10" />
+                </div>
+                <div className="mb-5" >
                 <a href="/meetOurChefs" className="text-white bg-transparent text-lg border-2 border-x-main-color border-y-gray-500 px-2 py-1 rounded-[10px]">
                   {t("home.services.details.service2.button")}
                 </a>
+                </div>
               </div>
             </div>
+
             <div className="flex flex-col items-center">
               <img
                 className="object-cover w-56 h-56 rounded-xl"
@@ -183,16 +214,19 @@ function HomePage() {
                 <h2 className="text-lg font-bold">
                   {t("home.services.details.service3.title")}
                 </h2>
-                <div className="mb-2" />
+                <div className="mb-5" >
                 <p className="text-xs leading-5 px-4 text-start">
                   {t("home.services.details.service3.description")}
                 </p>
-                <div className="mb-6" />
+                </div>
+                <div className="mb-4" >
                 <a href="/events/create" className="text-white bg-transparent text-lg border-2 border-x-main-color border-y-gray-500 px-2 py-1 rounded-[10px]">
                   {t("home.services.details.service3.button")}
                 </a>
+                </div>
               </div>
             </div>
+
           </div>
         </div>
 
@@ -239,11 +273,15 @@ function HomePage() {
           <p className="max-w-[90%] md:max-w-[70%] lg:max-w-[50%] playwrite-us-modern text-sm md:text-lg lg:text-xl text-center leading-6 mt-3">
             {t("home.joinCommunity.description")}
           </p>
-
-          {/* Button */}
-          <a href="/signup" className="text-white mt-5 bg-transparent text-lg border-2 border-main-color px-4 py-2 rounded-md hover:bg-main-color hover:text-white transition-all duration-300">
-            {t("home.joinCommunity.button")}
-          </a>
+          {!userData?.allrole?.includes("Chef") ?(
+            <a 
+              href="/signup" 
+              className="text-white mt-5 bg-transparent text-lg border-2 border-main-color px-4 py-2 rounded-md hover:bg-main-color hover:text-white transition-all duration-300"
+            >
+              {t("home.joinCommunity.button")}
+            </a>
+          ):""}
+         
 
           {/* Bottom Image Group */}
           <FourImagesGroup
