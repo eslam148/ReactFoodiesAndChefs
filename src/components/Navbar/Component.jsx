@@ -233,7 +233,7 @@ function Navbar() {
                 >
                   <img src={CompleteArrowDownImg} alt="icon" />
                   <span className="hidden md:block menu-item text-white hover:text-white-500 truncate">
-                    {`${userData?.firstName} ${userData?.lastName}`}
+                    {`${userData?.firstName} ${userData?.lastName?userData?.lastName:""}`}
                   </span>
                   <span className="sm:block md:hidden menu-item text-white hover:text-white-500 truncate">
                     {userData?.firstName}

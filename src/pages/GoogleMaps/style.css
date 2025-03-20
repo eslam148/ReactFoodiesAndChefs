@@ -1,0 +1,92 @@
+/* ✅ ضبط الصندوق الرئيسي */
+.leaflet-control-geocoder {
+    position: absolute !important;
+    top: 15px !important;
+    right: 15px !important;
+    z-index: 1000 !important;
+    background: white !important;
+    padding: 10px !important;
+    border-radius: 10px !important;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2) !important;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* ✅ ضبط زر البحث */
+.leaflet-control-geocoder-icon {
+    background: #007bff !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 50% !important;
+    width: 35px !important;
+    height: 35px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px !important;
+    transition: all 0.3s ease-in-out;
+}
+
+.leaflet-control-geocoder-icon:hover {
+    background: #0056b3 !important;
+}
+
+/* ✅ ضبط خانة البحث */
+.leaflet-control-geocoder-form input {
+    border: 2px solid #ddd !important;
+    outline: none !important;
+    padding: 8px 12px !important;
+    border-radius: 8px !important;
+    width: 230px !important;
+    font-size: 14px !important;
+    transition: all 0.3s ease-in-out;
+}
+
+.leaflet-control-geocoder-form input:focus {
+    border-color: #007bff !important;
+    box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.5) !important;
+}
+
+/* ✅ ضبط قائمة الاقتراحات */
+.leaflet-control-geocoder-alternatives {
+    background: white !important;
+    border-radius: 10px !important;
+    padding: 10px !important;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2) !important;
+    margin-top: 5px !important;
+    width: 100% !important;
+}
+
+.leaflet-control-geocoder-alternatives li {
+    list-style: none !important;
+    padding: 10px !important;
+    border-bottom: 1px solid #ddd !important;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+    font-size: 14px !important;
+}
+
+.leaflet-control-geocoder-alternatives li:hover {
+    background: #f0f0f0 !important;
+}
+
+.leaflet-control-geocoder-alternatives a {
+    text-decoration: none !important;
+    color: #333 !important;
+    font-weight: 500 !important;
+}
+
+/* ✅ ضبط رسالة الخطأ */
+.leaflet-control-geocoder-form-no-error {
+    background: #ffe6e6 !important;
+    color: #ff0000 !important;
+    font-size: 14px !important;
+    text-align: center !important;
+    padding: 5px !important;
+    border-radius: 5px !important;
+    margin-top: 5px !important;
+    box-shadow: 2px 2px 5px rgba(255, 0, 0, 0.2);
+}

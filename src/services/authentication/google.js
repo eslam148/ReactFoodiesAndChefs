@@ -8,7 +8,7 @@ const handleCredentialResponse = async (response) => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     tokenId: response.credential,
-                    role: "User", // Set role dynamically if needed
+                 // Set role dynamically if needed
                 }),
             });
 
@@ -16,6 +16,8 @@ const handleCredentialResponse = async (response) => {
             if (res.ok) {
                 localStorage.setItem("jwt", data.Token);
                 console.log("Login Successful:", data);
+                localStorage.setItem("token", res.token);
+                localStorage.setItem("user", JSON.stringify(res.data));
             } else {
                 console.error("Login Failed:", data);
             }
@@ -36,7 +38,7 @@ const googleSignInService = () => {
         }
 
         window.google.accounts.id.initialize({
-            client_id: "560736593811-hk51v90vndgusndl8a1fgupisctf2k8u.apps.googleusercontent.com",//process.env.REACT_APP_GOOGLE_CLIENT_ID,
+            client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
             callback: handleCredentialResponse,
         });
 
@@ -49,3 +51,4 @@ const googleSignInService = () => {
 };
 
 export default googleSignInService;
+
