@@ -5,7 +5,8 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import signinService from "../../services/authentication/signin";
 import { useNavigate, useSearchParams } from "react-router-dom";
-
+import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
+import GoogleSignInButton from '../../components/GoogleComponent/GooglebBtn'
 function SignInPage() {
   const { t } = useTranslation();
 
@@ -192,7 +193,8 @@ function SignInPage() {
             <span className="text-white font-medium">OR</span>
             <div className="border-t border-white flex-grow ml-3"></div>
           </div>
-          <button
+          <GoogleSignInButton></GoogleSignInButton>
+          {/* <button
             name="provider"
             style={{ fontSize: "18px", height: "39.42px", color: "#464343" }}
             className="w-full mt-4 bg-white font-semibold py-2 rounded-lg flex items-center justify-center shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -202,9 +204,33 @@ function SignInPage() {
           >
             <img src={GoogleImg} alt="Google Icon" className="w-5 h-5 mr-2" />
             {t("signin.signinWithGoogle")}
-          </button>
+          </button> */}
         </div>
       </div>
+      {/* <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+            <GoogleLogin
+                onSuccess={async (credentialResponse) => {
+                    console.log("Google Response:", credentialResponse);
+
+                    const res = await fetch(`${process.env.REACT_APP_API_URL}/User/google-sign-in`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ tokenId: credentialResponse.credential }),
+                    });
+
+                    const data = await res.json();
+
+                    if (res.ok) {
+                        localStorage.setItem("jwt", data.Token);
+                        localStorage.setItem("user", JSON.stringify(data));
+                        console.log("Login Successful:", data);
+                    } else {
+                        console.error("Login Failed:", data);
+                    }
+                }}
+                onError={() => console.error("Login Failed")}
+            />
+        </GoogleOAuthProvider> */}
     </div>
   );
 }

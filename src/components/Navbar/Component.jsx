@@ -242,10 +242,13 @@ function Navbar() {
                   <img
                     className="icon rounded-full w-12 h-12 object-cover"
                     src={
-                      userData?.profileImageLink
-                        ? `${process.env.REACT_APP_API_URL}/${userData.profileImageLink}`
+                      userData?.profileImage
+                        ? userData.profileImage.includes("http")
+                          ? userData.profileImage
+                          : `${process.env.REACT_APP_API_URL}/${userData.profileImage}`
                         : ProfileTempImg
                     }
+                   
                     alt="profileImage"
                   />
                 </button>

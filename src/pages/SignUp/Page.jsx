@@ -5,7 +5,12 @@ import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import signupService from "../../services/authentication/signup";
 import { useNavigate } from "react-router-dom";
+import GoogleSignInButton from '../../components/GoogleComponent/GooglebBtn'
+const EnumRole = {
+  Foodies:"Foodies",
+  Chef:"Chef"
 
+}
 function SignUpPage() {
   const { t } = useTranslation();
   const naviagte = useNavigate();
@@ -17,63 +22,15 @@ function SignUpPage() {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [role, setRole] = useState("Foodies");
+  const [Role, setRole] = useState(EnumRole.Foodies);
 
   const [passowrdError, setPasswordError] = useState("");
   const [error, setError] = useState(null);
-  const handleCredentialResponse = async (response) => {
-    console.log("Google Response:", response);
-  
-    if (response.credential) {
-        try {
-            const res = await fetch(`${process.env.REACT_APP_API_URL}/User/google-sign-in`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    tokenId: response.credential,
-                 // Set role dynamically if needed
-                }),
-            });
-  
-            const data = await res.json();
-            if (res.ok) {
-                
-                console.log("Login Successful:", data);
-                localStorage.setItem("token", data.token);
-                localStorage.setItem("user", JSON.stringify(data.data));
-                naviagte("/");
-            } else {
-                console.error("Login Failed:", data);
-            }
-        } catch (err) {
-            console.error("Google Sign-In Error:", err);
-        }
-    } else {
-        console.warn("No credential received from Google.");
-    }
+  const toggleRole = () => {
+    setRole((prevRole) =>
+      prevRole === EnumRole.Foodies ? EnumRole.Chef : EnumRole.Foodies
+    );
   };
-  
-  const googleSignInService = () => {
-  
-    try {
-        if (!window.google) {
-            console.error("Google Identity script not loaded.");
-            return;
-        }
-  
-        window.google.accounts.id.initialize({
-            client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
-            callback: handleCredentialResponse,
-        });
-  
-        window.google.accounts.id.prompt();
-        console.log( process.env.REACT_APP_GOOGLE_CLIENT_ID)
-  
-    } catch (err) {
-        console.error("Google Sign-In Error:", err);
-    }
-  };
-  
   const togglePasswordVisibility = (id, iconId) => {
     const input = document.getElementById(id);
     const icon = document.getElementById(iconId);
@@ -196,7 +153,7 @@ function SignUpPage() {
       phone,
       password,
       confirmPassword,
-      role,
+      Role,
     });
 
     console.log(res);
@@ -486,19 +443,14 @@ function SignUpPage() {
               <input
                 name="Role"
                 type="checkbox"
-                className="hidden peer"
+                className="accent-[#6555FF] hover:accent-[#6555FF] w-5 h-5 "
                 id="Foodies"
                 value="Foodies"
-                onChange={(e) => setRole(e.target.value)}
+                onChange={(e) => toggleRole()}
                 defaultChecked
                 disabled
               />
-              <label
-                htmlFor="Foodies"
-                className="flex items-center justify-center w-6 h-6 border-2 border-white rounded-sm peer-checked:bg-[#757575] peer-checked:text-white peer-checked:border-[#757575] text-xl font-bold transition duration-200 cursor-not-allowed"
-              >
-                ✔
-              </label>
+           
               <span className="mx-2 text-white font-bold text-xl md:text-2xl">
                 Foodie
               </span>
@@ -506,24 +458,19 @@ function SignUpPage() {
 
             {/* Chefs Option */}
             <div className="flex items-center justify-center">
-              <input
-                name="Role"
-                type="checkbox"
-                className="hidden peer"
-                id="Chefs"
-                value="Chefs"
-                onChange={(e) => setRole(e.target.value)}
-              />
-              <label
-                htmlFor="Chefs"
-                className="flex items-center justify-center w-6 h-6 border-2 border-white rounded-sm cursor-pointer peer-checked:bg-[#6555FF] peer-checked:text-white peer-checked:border-[#6555FF] text-xl font-bold transition duration-200"
-              >
-                ✔
-              </label>
-              <span className="mx-2 text-white font-bold text-xl md:text-2xl">
-                Chef
-              </span>
-            </div>
+  <input
+    name="Role"
+    type="checkbox"
+    className="accent-[#6555FF] hover:accent-[#6555FF] w-5 h-5 "
+    id="Chefs"
+    value="Chefs"
+    onChange={(e) => setRole(e.target.value)}
+  />
+  
+  <span className="mx-2 text-white font-bold text-xl md:text-2xl">
+    Chef
+  </span>
+</div>
           </div>
 
           <div className="text-red-500 font-bold mt-12 text-center" id="error">
@@ -556,7 +503,9 @@ function SignUpPage() {
 
           {/* Sign Up with Google Button */}
           <div id="googleFoodie" className="mt-8">
-            <button
+                      <GoogleSignInButton UserRole={Role}/> 
+ 
+            {/* <button
               id="element1"
               name="provider"
               style={{ height: "39.42px", color: "#464343" }}
@@ -565,7 +514,7 @@ function SignUpPage() {
             >
               <img src={GoogleImg} alt="Google Icon" className="w-5 h-5 mr-2" />
               {t("signup.signupWithGoogle")}
-            </button>
+            </button> */}
           </div>
           <input name="Role" type="hidden" value="false" />
         </div>
