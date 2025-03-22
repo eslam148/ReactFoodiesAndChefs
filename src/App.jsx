@@ -31,7 +31,7 @@ import RequestsPage from "./pages/Requests/Page";
 import ShowRequestPage from "./pages/Requests/ShowRequest/Page";
 import InvitationCardPage from "./pages/Invites/Card/Page";
 import Chat from "./pages/Chat/page";
-
+import Invitation from "./pages/invitatinpage/Page"
 function App() {
   useEffect(() => {
     document.body.dir = i18n.language === "ar" ? "rtl" : "ltr";
@@ -80,6 +80,7 @@ function App() {
           {/* Invites Pages */}
           <Route path="/invites" element={<InvitesPage />} />
           <Route path="/invites/:inviteId" element={<InvitationCardPage />} />
+          <Route path="/invitation/" element={<Invitation />} />
 
           {/* Requests Pages */}
           <Route path="/requests" element={<RequestsPage />} />

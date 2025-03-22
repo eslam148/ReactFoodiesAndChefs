@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import EventsForm from "../../../components/EventsForm/Component";
-
 function CreateEventsPage() {
   const [event, setEvent] = useState({});
 
@@ -18,6 +17,7 @@ function CreateEventsPage() {
   return (
     <div>
       <EventsForm isNewEvent={true} event={event} setEvent={setEvent} />
+
     </div>
   );
 }

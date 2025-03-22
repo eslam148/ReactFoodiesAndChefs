@@ -13,10 +13,13 @@ import {
   updateEventService,
 } from "../../services/events/events";
 import checkSignIn from "../../utils/checkSignIn";
+import MapModel from '../LocationMap/MapMode'
 
 function EventsForm({ isNewEvent, event, setEvent }) {
   const { t } = useTranslation();
-
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+ 
   const today = new Date();
   const todayDate = today.toISOString().split("T")[0]; // Converts to yyyy-mm-dd format
   const [endTime, setEndTime] = useState("");
@@ -25,7 +28,8 @@ function EventsForm({ isNewEvent, event, setEvent }) {
   useEffect(() => {
     checkSignIn();
   });
-
+  useEffect(() => {
+   },[selectedLocation]);
   useEffect(() => {
     const calculateEndTime = (date, startTime, hours, minutes) => {
       if (!date || !startTime || !hours) {
@@ -59,10 +63,7 @@ function EventsForm({ isNewEvent, event, setEvent }) {
     }
   }, [event]);
 
-  const openMapsPage = () => {
-    window.open("/googleMap", "mapsWindow", "width=1000,height=800");
-  };
-
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -77,8 +78,11 @@ function EventsForm({ isNewEvent, event, setEvent }) {
         date: new Date(event.date).toISOString(),
         startTime: convertTime24HToIso(event.date, event.startTime),
         endTime: convertTime24HToIso(event.date, endTime),
-      };
+        latitude:selectedLocation[0],
+        longitude:selectedLocation[1]
 
+      };
+      console.log(eventToSubmit)
       if (isNewEvent) {
         const res = await createEventService(eventToSubmit);
 
@@ -479,7 +483,7 @@ function EventsForm({ isNewEvent, event, setEvent }) {
               {/* Button to open the map and set location */}
               <div className="absolute top-2 flex flex-col items-center justify-center pr-3 pt-6 rtl:left-2 ltr:right-0 rtl:right-auto ltr:left-auto">
                 <button
-                  onClick={openMapsPage}
+                  onClick={()=>setIsModalOpen(true)}
                   style={{ borderRadius: "10px" }}
                   type="button"
                   className="p-2 leading-3 bg-[#242424] text-xs lato-bold font-medium w-33 h-8 text-white rounded-md flex items-center justify-center focus:outline-none"
@@ -512,6 +516,11 @@ function EventsForm({ isNewEvent, event, setEvent }) {
               </button>
             </div>
           </form>
+          <MapModel
+        setSelectedLocation={setSelectedLocation}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+      />
         </section>
         <section className="w-5/12 hidden md:flex justify-center ltr:border-l rtl: border-r border-main-color">
           <img
@@ -520,6 +529,7 @@ function EventsForm({ isNewEvent, event, setEvent }) {
             alt="DishImg"
           />
         </section>
+
       </main>
     </div>
   );

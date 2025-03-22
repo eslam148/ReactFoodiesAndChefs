@@ -1,0 +1,25 @@
+.Inv-bg {
+    background-image: url("https://s3-alpha-sig.figma.com/img/4ca9/2064/0fe650c18919e395ca67a9139cbc5b69?Expires=1743379200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=S8hMOVekv1VFwSCMJP-0N41KHGlbXybMSOZZY2CrWfGDvijBCdpP9dU~Onj0OmM1K3qrtI0vLqSrUNsyDzysMCTJx4Nq42UMkiaY3P5pyipjj4WgE98Gn355q0mJbR0~cKm-AdgLH5j61Ux1kOW8E~HJYCGX1EJ-wI353NN1cmwscKOySUgDHU8wiAzMbMgNr5rQgL2iltQxmVnOJPTB3QQL51QPNNpxu3D-DhZHFlfjkoRoFHIh5vtL-2a9PFKpi82BygvI76dbsh9F6fGv76muw3lyi7NPRCqEGGYjSwd2LbtGFpKJ1qDxcFOaKGdPfNIV53sDnR8p9p69pSCe~Q__");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100%;
+
+    /* Initially hidden with slight back position */
+    opacity: 0.5;
+    transform: translateY(-50px);
+    animation: fadeSlideIn 1.5s ease-out forwards;
+}
+
+/* Keyframe Animation */
+@keyframes fadeSlideIn {
+    from {
+        
+        transform: translateY(-50px);
+    }
+    to {
+       
+        transform: translateY(0);
+    }
+}
