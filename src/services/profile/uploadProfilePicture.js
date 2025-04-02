@@ -13,7 +13,6 @@ const uploadProfilePicture = async (file, token) => {
 
             const queryParams = new URLSearchParams(jsonData).toString();
 
-            // set the new profile picture
             res = await fetch(`${process.env.REACT_APP_API_URL}/User/EditProfile?${queryParams}`, {
                 method: "POST",
                 headers: {
@@ -22,9 +21,14 @@ const uploadProfilePicture = async (file, token) => {
                 },
             });
 
+            if (!res.ok) {
+                const errorDetails = await res.text();
+                throw new Error(`Failed to update profile picture: ${res.status} - ${errorDetails}`);
+            }
+
             const data = await res.json();
 
-            console.log("Chnaged Profile Picture");
+            console.log("Changed Profile Picture");
             console.log(data);
 
             return data;
@@ -33,6 +37,7 @@ const uploadProfilePicture = async (file, token) => {
         }
     } catch (error) {
         console.error("Upload failed:", error);
+        return { success: false, message: error.message };
     }
 }
 

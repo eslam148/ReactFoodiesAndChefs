@@ -4,12 +4,14 @@ import { useTranslation } from "react-i18next";
 import checkSignIn from "../../utils/checkSignIn";
 import { getAllMenusService } from "../../services/menus/menus";
 import LoadingSpinner from "../../components/Spinner/Component";
+import "../../pages/Requests/ShowRequest/styles.css";
 
 function MenusPage() {
   const { t } = useTranslation();
 
   const [menus, setMenus] = useState([]);
   const [isMenusLoading, setIsMenusLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     checkSignIn();
@@ -38,8 +40,24 @@ function MenusPage() {
 
     getMenus();
   }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      // Simulate API call
+      setIsLoading(false);
+    }, 2000);
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
   return (
-    <div className="mainbg overflow-hidden min-h-screen">
+    <div className="mainbg overflow-hidden min-h-screen fade-in">
       <div className="w-full  mx-3 my-3 border-custom">
         {/* <Sidebar */}
         <main className="min-h-[80dvh] md:flex md:gap-10 mt-0 p-0" id="overlay">

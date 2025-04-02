@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
- 
+import LoadingSpinner from "../../../components/Spinner/Component";
 import "./styles.css";
-import { getEventByEventIdService,SetMySelf ,AddHostprice} from "../../../services/events/events";
+import { getEventByEventIdService,SetMySelf ,AddHostprice,getChefOfferByEventIdService} from "../../../services/events/events";
 import checkSignIn from "../../../utils/checkSignIn";
 import { GetChefsService } from "../../../services/Chef/Chef";
 import ChefList from "../../../components/ChefList/Component";
@@ -21,6 +21,9 @@ function ShowEventPage() {
   const [copied, setCopied] = useState(false);
   const [myMenu, setMyMenu] = useState([]);
   const [isFree, setIsFree] = useState(false);
+  const [UserData, setUserData] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+
 
   const updateEvent = async (eventId) => {
     const res = await getEventByEventIdService(eventId);
@@ -32,9 +35,22 @@ function ShowEventPage() {
       console.log(res.data,event);
     }
   };
+  const ChefOfferByEventId = async (eventId) => {
+    const res = await getChefOfferByEventIdService(eventId);
+
+    if (res && res.success) {
+    
+
+      setChefOffers(res.data);
+      console.log(res.data,"//////////////");
+    }
+  };
   useEffect(() => {
     checkSignIn();
-  });
+   const user=  localStorage.getItem("user")
+   setUserData(user)
+   ChefOfferByEventId(eventId)
+  },[eventId]);
   useEffect(() => {
     const getMeue = async () => {
       const res = await getMyMenu();
@@ -65,6 +81,12 @@ function ShowEventPage() {
     updateEvent(eventId);
   }, []);
 
+  useEffect(() => {
+    setTimeout(() => {
+      // Simulate API call
+      setIsLoading(false);
+    }, 2000);
+  }, []);
   
   const handleCopyClick = async () => {
     try {
@@ -136,10 +158,18 @@ function ShowEventPage() {
         })
         .catch(error => console.error("Error setting self as chef:", error));
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <LoadingSpinner />
+      </div>
+    );
+  }
   
   return (
     <main
-      className="min-h-[80dvh] md:flex md:gap-10 mt-0 p-0 "
+      className="min-h-[80dvh] md:flex md:gap-10 mt-0 p-0 fade-in"
       id="main-show-event"
     >
       <section className="min-h-screen  md:space-y-14 space-y-5 md:min-h-full flex flex-col w-full items-center p-3 md:p-5 z-10 text-start lato-bold md:pl-10 plus-jakarta-sans">
@@ -314,8 +344,9 @@ function ShowEventPage() {
         </button>
       </div>
     </div>
-
-    {/* Form to submit menu */}
+    {UserData.allrole?.some((role) => role.toLowerCase() === "chef") ? (
+  // Form to submit menu
+  <>
     <p className="plus-jakarta-sans text-[15px] md:text-[26px] border-t border-main-color pt-5 w-full font-bold">
       3- Showcase your talent by adding your own menu.
     </p>
@@ -355,6 +386,10 @@ function ShowEventPage() {
         </button>
       </div>
     </form>
+  </>
+) : null}
+
+ 
   </div>
 )}
 
@@ -438,9 +473,8 @@ function ShowEventPage() {
         <div className="w-full flex justify-center items-center  m-4 font-bold">
 
         {!event.chef ? (
-         
           chefOffers.length > 0 ? (
-                <ChefOfferTable />
+                <ChefOfferTable chefData={chefOffers} />
           ) : (
             <p className="text-xs md:text-3xl">
               Your request for a culinary offer has not been accepted by any chef yet.

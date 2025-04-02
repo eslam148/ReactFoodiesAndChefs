@@ -1,29 +1,110 @@
+import InstagramImg from '../../assets/images/instagram.svg';
+import DisInstagramImg from '../../assets/images/DisInstagram.svg';
+import DisFacebookImg  from '../../assets/images/DisFaceBook.svg';
+import FacebookImg from '../../assets/images/facebook.svg';
+import DisXImg from '../../assets/images/DisX.svg';
+import XImg from '../../assets/images/X.svg';
 import CustomePagination from "../CustomePagination/Component";
-function ChefOfferTable(chefData){
+function ChefOfferTable(data){
     const handleSendInviteToChef = () => {
         console.log("Send Invite to Chef");
       };
-    
+    console.log(data.chefData)
 
     return (
          <div className="w-full">
           <table className="w-full rounded-[5px] overflow-hidden">
           <thead className="bg-[#D89D7240]  rounded-t-[5px]">
-              <tr className="grid md:grid-cols-5 grid-cols-5 gap-2 md:gap-1 my-5 text-center">
+              <tr className="grid md:grid-cols-6 grid-cols-6 gap-2 md:gap-1 my-5 text-center">
                 <th className="md:text-[22px] text-[0.5rem] w-full mx-3 md:text-start text-start">
                 Chefs offers
                 </th>
 
                 <th className="md:text-xl text-[0.5rem]">Cost / Guest</th>
-                <th className="md:text-xl text-[0.5rem]">Chat Now</th>
-                <th className="md:text-xl text-[0.5rem] col-span-2 md:col-span-1">
-                  Social links
-                </th>
+                 <th className="md:text-xl text-[0.5rem]">Chat Now</th>
                 <th className="md:text-xl text-[0.5rem]">Offer Status</th>
-               
+                <th className="md:text-xl text-[0.5rem]">Socila Links</th>
+
+                <th className="md:text-xl text-[0.5rem]">Location</th>
               </tr>
             </thead>
             <tbody className="bg-[#D9D9D926]">
+            {Array.isArray(data.chefData) && data.chefData.map((data, index) => (
+            <tr key={index} className="grid md:grid-cols-6 grid-cols-6 gap-2 md:gap-1 my-5 text-center">
+              <td>{data.chefInfo.firstName + " " + data.chefInfo.lastName}</td>
+              <td>{data.chefPrice} {data.chefCurrency}</td>
+               <td><a>Chat Now</a></td>
+               <td className="md:text-[22px] text-[0.5rem] font-semibold col-span-2 md:col-span-1">
+         <div className="flex rounded-[10px]  p-1 md:p-3 px-2 justify-center items-center w-9/12 m-auto border border-[#949494] bg-[#222222]">
+           {data.chefInfo.facebookAccount ? (
+            <a href={data.chefInfo.facebookAccount}>
+              <img
+                className="w-1/2 m-auto"
+                src={FacebookImg}
+                alt="Facebook"
+              />
+            </a>
+          ) : (
+            <div>
+              <img0
+                className="w-1/2 m-auto"
+                src={DisFacebookImg}
+                alt="Facebook"
+              />
+            </div>
+          )}
+
+          {data.chefInfo.instagramAccount ? (
+            <a href={data.chefInfo.instagramAccount}>
+              <img
+                className="w-1/2 m-auto"
+                src={InstagramImg}
+                alt="Instagram"
+              />
+            </a>
+          ) : (
+            <div>
+              <img
+                className="w-1/2 m-auto"
+                src={DisInstagramImg}
+                alt="Instagram"
+              />
+            </div>
+          )}
+
+          {data.chefInfo.xAccount ? (
+            <a href={data.chefInfo.xAccount}>
+              <img className="w-1/2 m-auto" src={XImg} alt="X" />
+            </a>
+          ) : (
+            <div>
+              <img className="w-1/2 m-auto" src={DisXImg} alt="X" />
+            </div>
+          )}
+        </div>
+      </td>
+
+      <td className="flex justify-end md:justify-center ">
+        <button
+          className="block text-white bg-[#6555FF] w-[45px] md:w-[113px] h-[16px] md:h-[36px] md:text-xl text-[0.5rem] text-center font-medium rounded-[15px] border-[3px] border-[#6555FF] drop-shadow-md shadow-[#6555FF]"
+         // onClick={handleSendInviteToChef}
+        >
+          Send
+        </button>
+      </td>
+      <td
+        className="flex justify-center cursor-pointer"
+      //  onClick={handleFavoriteClick}
+      >
+        <i
+          id="fav-Icone"
+          className={`text-main-color fa-heart md:text-3xl ${
+            data.chefInfo.isFavorite ? "fas" : "far"
+          }`}
+        ></i>
+      </td>
+            </tr>
+          ))}
            
             </tbody>
 

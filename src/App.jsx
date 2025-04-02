@@ -80,7 +80,7 @@ function App() {
           {/* Invites Pages */}
           <Route path="/invites" element={<InvitesPage />} />
           <Route path="/invites/:inviteId" element={<InvitationCardPage />} />
-          <Route path="/invitation/" element={<Invitation />} />
+          <Route path="/invitation/:id?" element={<Invitation />} />
 
           {/* Requests Pages */}
           <Route path="/requests" element={<RequestsPage />} />

@@ -3,14 +3,23 @@ import { useEffect, useState } from "react";
 import "./styles.css";
 import { useTranslation } from "react-i18next";
 import checkSignIn from "../../utils/checkSignIn";
+import LoadingSpinner from "../../components/Spinner/Component";
 
 function OffersPage() {
   const { t } = useTranslation();
   const [offers, setOffers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     checkSignIn();
   });
+
+  useEffect(() => {
+    setTimeout(() => {
+      // Simulate API call
+      setIsLoading(false);
+    }, 2000);
+  }, []);
 
   useEffect(() => {
     setOffers([
@@ -23,9 +32,17 @@ function OffersPage() {
     ]);
   }, []);
 
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
   return (
     <main
-      className="offers-page min-h-[80dvh]  md:flex md:gap-10 mt-0 p-0 plus-jakarta-sans"
+      className="offers-page min-h-[80dvh]  md:flex md:gap-10 mt-0 p-0 plus-jakarta-sans fade-in"
       id="overlay"
     >
       <section className="min-h-screen mainbg relative   space-y-6 md:min-h-full flex flex-col w-full items-center p-3 md:p-5 z-10 text-start lato-bold md:pl-10 plus-jakarta-sans">

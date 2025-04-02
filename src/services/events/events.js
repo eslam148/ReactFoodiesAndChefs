@@ -138,3 +138,52 @@ export const AddHostprice = async (event) => {
         console.log(err);
     }
 }
+
+export const GetInvitationInfo = async (eventId) => {
+    try {
+        const token = localStorage.getItem("token");
+
+        const res = await fetch(
+            `${process.env.REACT_APP_API_URL}/Home/GetInvitationInfo?EventId=${eventId}`,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                },
+            }
+        );
+
+        if (!res.ok) {
+            throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+
+        const eventsData = await res.json();
+        console.log("Fetched Data:", eventsData); // 🔍 تحقق من البيانات
+
+        return eventsData;
+    } catch (err) {
+        console.error("Failed to get event data:", err);
+        return null;
+    }
+};
+
+
+export const getChefOfferByEventIdService = async (eventId) => {
+    try {
+        const token = localStorage.getItem("token");
+
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/Home/GetChefOffersByEventId?EventId=${eventId}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            }
+        });
+
+        const eventData = await res.json();
+
+        return eventData;
+    } catch (err) {
+        console.log(`Failed to get event by event id: ${eventId}`);
+        console.log(err);
+    }
+}

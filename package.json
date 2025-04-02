@@ -13,6 +13,7 @@
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^14.6.0",
     "cra-template": "1.2.0",
+    "framer-motion": "^12.6.0",
     "google-one-tap": "^1.0.6",
     "i18next": "^20.0.0",
     "i18next-browser-languagedetector": "^6.1.0",

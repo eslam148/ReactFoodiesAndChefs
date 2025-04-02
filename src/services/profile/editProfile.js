@@ -21,8 +21,6 @@ const editProfileService = async (userData) => {
 
         console.log(userData);
 
-
-        // Convert JSON object to query string
         const queryParams = new URLSearchParams(userData).toString();
 
         const url = `${process.env.REACT_APP_API_URL}/User/EditProfile?${queryParams}`;
@@ -35,11 +33,17 @@ const editProfileService = async (userData) => {
             },
         });
 
+        if (!res.ok) {
+            const errorDetails = await res.text();
+            throw new Error(`Failed to edit profile: ${res.status} - ${errorDetails}`);
+        }
+
         const data = await res.json();
 
-        return data
+        return data;
     } catch (error) {
-        console.log(error);
+        console.error("Error in editProfileService:", error);
+        return { success: false, message: error.message };
     }
 }
 

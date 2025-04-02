@@ -14,14 +14,16 @@ const uploadFileService = async (file) => {
         });
 
         if (!res.ok) {
-            throw new Error("Upload failed");
+            const errorDetails = await res.text();
+            throw new Error(`Upload failed: ${res.status} - ${errorDetails}`);
         }
 
         const data = await res.json();
 
         return data;
     } catch (err) {
-        console.log(err);
+        console.error("Error in uploadFileService:", err);
+        return { success: false, message: err.message };
     }
 }
 
