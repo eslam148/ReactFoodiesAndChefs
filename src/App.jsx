@@ -12,6 +12,7 @@ import CreateEventsPage from "./pages/Events/Create/Page";
 import Footer from "./components/Footer/Component";
 import ProfilePage from "./pages/Profile/Page";
 import ChefProfilePage from "./pages/Profile/ChefProfile/Page";
+import RequestChefPage from "./pages/RequestChef/Page";
 
 import EditProfilePage from "./pages/Profile/Edit/Page";
 import InvitesPage from "./pages/Invites/Page";
@@ -85,6 +86,7 @@ function App() {
           {/* Requests Pages */}
           <Route path="/requests" element={<RequestsPage />} />
           <Route path="/showRequest/:eventId" element={<ShowRequestPage />} />
+          <Route path="/RequestChefPage" element={<RequestChefPage />} />
 
           {/* Meet Our Chefs */}
           <Route path="/meetOurChefs" element={<MeetOurChefs />} />
